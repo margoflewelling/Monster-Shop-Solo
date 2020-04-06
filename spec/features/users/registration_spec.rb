@@ -48,4 +48,29 @@ RSpec.describe 'as a visitor', type: :feature do
     expect(page).to have_content("Your password fields do not match.")
   end
 
+  it "can not register with an existing email" do
+    user = User.create({name: "Bob", street_address: "22 dog st", city: "Fort Collins",
+                      state: "CO", zip_code: "80375", email_address: "bob@example.com",
+                      password: "password1"
+                      })
+
+    visit('/')
+    click_on('Register')
+    expect(current_path).to eq('/register')
+    fill_in :name, with: "Bob"
+    fill_in :street_address, with: "531 Pearl"
+    fill_in :city, with: "Denver"
+    fill_in :state, with: "CO"
+    fill_in :zip_code, with: "80210"
+    fill_in :email_address, with: "bob@example.com"
+    fill_in :password, with: "Password123"
+    fill_in :confirm_password, with: "Password123"
+    click_on('Submit')
+    expect(page).to have_content("This email address already has an account associated with it.")
+    expect(current_path).to eq('/register')
+    save_and_open_page
+
+  end
+
+
 end
