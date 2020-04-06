@@ -5,12 +5,12 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    if params[:password] == params[:confirm_password] && user.save
+    if user.save && params[:password] == params[:confirm_password]
       User.create(user_params)
       flash[:notice] = "Welcome #{user.name}! You are now registered and logged in!"
       redirect_to '/profile'
     elsif params[:password] != params[:confirm_password]
-      flash[:notice] = "Your password fields do not match"
+      flash[:notice] = "Your password fields do not match. #{user.errors.full_messages.to_sentence}"
       render(:new)
     else
       flash[:notice] = user.errors.full_messages.to_sentence
