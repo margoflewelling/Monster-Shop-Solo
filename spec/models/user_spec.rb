@@ -11,7 +11,6 @@ describe User, type: :model do
     it { should validate_presence_of :zip_code }
     it { should validate_presence_of :email_address }
     it { should validate_presence_of :password }
-    it { should validate_presence_of :confirm_password }
   end
 
 
