@@ -8,6 +8,6 @@ class User < ApplicationRecord
                         :state,
                         :zip_code,
                         :email_address,
-                        :password
-
+                        :password,
+                        :confirm_password
 end
