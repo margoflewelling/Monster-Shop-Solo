@@ -3,28 +3,28 @@
   <%= form_for @user, :url => '/register', method: :post do |f| %>
 
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, id:"name" %>
 
-    <%= f.label :address %>
-    <%= f.text_field :street_address %>
+    <%= f.label :user_address %>
+    <%= f.text_field :street_address, id:"street_address" %>
 
     <%= f.label :city %>
-    <%= f.text_field :city %>
+    <%= f.text_field :city, id:"city" %>
 
     <%= f.label :state %>
-    <%= f.text_field :state %>
+    <%= f.text_field :state, id:"state" %>
 
     <%= f.label :zip_code %>
-    <%= f.text_field :zip_code %>
+    <%= f.text_field :zip_code, id:"zip_code" %>
 
     <%= f.label :email_address %>
-    <%= f.text_field :email_address, :value => "" %>
+    <%= f.text_field :email_address, :value => "", id:"email_address" %>
 
     <%= f.label :password %>
-    <%= f.password_field :password %>
+    <%= f.password_field :password, id:"password" %>
 
     <%= f.label :confirm_password %>
-    <%= f.password_field :confirm_password %>
+    <%= f.password_field :confirm_password, id:"confirm_password" %>
 
     <%= submit_tag 'Submit' %>
   <% end %>

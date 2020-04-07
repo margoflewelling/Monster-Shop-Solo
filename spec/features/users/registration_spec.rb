@@ -49,9 +49,9 @@ RSpec.describe 'as a visitor', type: :feature do
   end
 
   it "can not register with an existing email" do
-    user = User.create({name: "Bob", street_address: "22 dog st", city: "Fort Collins",
+    user = User.create!({name: "Bob", street_address: "22 dog st", city: "Fort Collins",
                       state: "CO", zip_code: "80375", email_address: "bob@example.com",
-                      password: "password1"
+                      password: "password1", confirm_password: "password1"
                       })
 
     visit('/')
@@ -66,11 +66,7 @@ RSpec.describe 'as a visitor', type: :feature do
     fill_in :password, with: "Password123"
     fill_in :confirm_password, with: "Password123"
     click_on('Submit')
-    expect(page).to have_content("This email address already has an account associated with it.")
+    expect(page).to have_content("Email address already has an account associated with it")
     expect(current_path).to eq('/register')
-    save_and_open_page
-
   end
-
-
 end
