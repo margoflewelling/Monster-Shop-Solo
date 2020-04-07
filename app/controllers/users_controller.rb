@@ -8,21 +8,15 @@ class UsersController < ApplicationController
     @user = User.create(user_params)
     if @user.save
       flash[:notice] = "Welcome #{@user.name}! You are now registered and logged in!"
-      redirect_to '/profile'
-    # elsif user_params[:password] != user_params[:password_confirmation]
-    #   flash[:notice] = "Your password fields do not match. #{@user.errors.full_messages.to_sentence}"
-    #   render(:new)
+      session[:user_id] = @user.id
+      redirect_to '/user/profile'
     else
       flash[:notice] = @user.errors.full_messages.to_sentence
       render(:new)
     end
   end
 
-  def login
-  end
 
-  def profile
-  end
 
 
   private
