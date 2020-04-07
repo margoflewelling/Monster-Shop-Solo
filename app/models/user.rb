@@ -7,7 +7,9 @@ class User < ApplicationRecord
                         :city,
                         :state,
                         :zip_code,
-                        :email_address,
-                        :password,
-                        :confirm_password
+                        :email_address
+
+  validates_presence_of :password, require: true
+
+  has_secure_password
 end
