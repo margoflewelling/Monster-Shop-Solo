@@ -13,18 +13,23 @@
       <%= link_to "Home", "/"%>
       <%= link_to "All Merchants", "/merchants"%>
       <%= link_to "All Items", "/items"%>
-      <%= link_to "Cart: #{cart.total_items}", "/cart" %>
-      <% if !current_user? && !current_merchant? %>
+      <% if current_merchant?  %>
+        <%= link_to "Cart: #{cart.total_items}", "/cart" %>
+        <%= link_to "Merchant Dashboard", "/merchant" %>
+      <% elsif current_admin? %>
+        <%= link_to "Dashboard", "/admin" %>
+        <%= link_to "Users", "/admin/users" %>
+      <% else %>
+        <%= link_to "Cart: #{cart.total_items}", "/cart" %>
+    <% end %>
+      <% if !current_user? && !current_merchant? && !current_admin?%>
         <%= link_to "Register", "/register"%>
         <%= link_to "Log in", "/login"%>
-      <% elsif current_merchant?  %>
-        <%= link_to "Profile", "/user/profile" %>
-        <%= link_to "Merchant Dashboard", "/merchant" %>
-        <%= link_to "Log out", "/user/logout" %>
       <% else %>
         <%= link_to "Profile", "/user/profile" %>
-        <%= link_to "Log out", "/user/logout" %>
-      <% end %>
+        <%= link_to "Log out", "/logout" %>
+    <% end %>
+
     </nav>
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">

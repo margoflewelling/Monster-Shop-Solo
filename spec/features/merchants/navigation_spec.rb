@@ -63,6 +63,6 @@ RSpec.describe 'As a merchant' do
       click_link "Log out"
     end
 
-    expect(current_path).to eq('/user/logout')
+    expect(current_path).to eq('/logout')
   end
 end
