@@ -86,10 +86,10 @@ RSpec.describe 'As a default user' do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     expect(user.role).to eq("user")
 
-    visit "/merchant/dashboard"
+    visit "/merchant"
     expect(page).to have_content("The page you were looking for doesn't exist.")
 
-    visit "/admin/dashboard"
+    visit "/admin"
     expect(page).to have_content("The page you were looking for doesn't exist.")
 
     visit "/admin/users"

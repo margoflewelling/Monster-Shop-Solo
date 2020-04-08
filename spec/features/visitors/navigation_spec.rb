@@ -6,10 +6,10 @@ RSpec.describe 'As a visitor' do
     visit "/user/profile"
     expect(page).to have_content("The page you were looking for doesn't exist.")
 
-    visit "/merchant/dashboard"
+    visit "/merchant"
     expect(page).to have_content("The page you were looking for doesn't exist.")
 
-    visit "/admin/dashboard"
+    visit "/admin"
     expect(page).to have_content("The page you were looking for doesn't exist.")
   end
 end

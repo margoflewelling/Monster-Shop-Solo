@@ -66,15 +66,22 @@ RSpec.describe 'As an admin' do
 
     expect(current_path).to eq('/logout')
   end
+
+  it 'does not have access to merchant or cart' do
+    user = User.create({name: "Bob", street_address: "22 dog st", city: "Fort Collins",
+                         state: "CO", zip_code: "80375", email_address: "bob@example.com",
+                         password: "password1", password_confirmation: "password1", role: 2
+                        })
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    expect(user.role).to eq("admin")
+
+    visit "/merchant"
+    expect(page).to have_content("The page you were looking for doesn't exist.")
+
+    visit "/cart"
+    expect(page).to have_content("The page you were looking for doesn't exist.")
+  end
+
+
 end
-
-
-
-# As an admin
-# I see the same links as a regular user
-# Plus the following links
-# - a link to my admin dashboard ("/admin")
-# - a link to see all users ("/admin/users")
-#
-# Minus the following links/info
-# - a link to my shopping cart ("/cart") or count of cart items
