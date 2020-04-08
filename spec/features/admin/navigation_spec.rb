@@ -21,7 +21,7 @@ RSpec.describe 'As an admin' do
     fill_in :password, with: 'henry2004'
     click_button 'Log in'
 
-    expect(current_path).to eq('/admin')
+    expect(current_path).to eq('/user/profile')
     expect(page).to have_content("Logged in as #{admin.name}")
 
     within 'nav' do
@@ -64,7 +64,7 @@ RSpec.describe 'As an admin' do
       click_link "Log out"
     end
 
-    expect(current_path).to eq('/admin/logout')
+    expect(current_path).to eq('/logout')
   end
 end
 
