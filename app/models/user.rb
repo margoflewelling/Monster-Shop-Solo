@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   validates_presence_of :password, require: true
 
-  enum role: {user: 0, admin: 2}
+  enum role: {user: 0, merchant: 1, admin: 2}
 
   has_secure_password
 end
