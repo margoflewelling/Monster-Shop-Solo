@@ -65,4 +65,26 @@ RSpec.describe 'As a merchant' do
 
     expect(current_path).to eq('/logout')
   end
+
+  it 'does not have access to admin' do
+    user = User.create({name: "Bob", street_address: "22 dog st", city: "Fort Collins",
+                         state: "CO", zip_code: "80375", email_address: "bob@example.com",
+                         password: "password1", password_confirmation: "password1", role: 1
+                        })
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    expect(user.role).to eq("merchant")
+
+    visit "/admin"
+    expect(page).to have_content("The page you were looking for doesn't exist.")
+  end
+  
 end
+
+
+
+
+#
+# As a merchant employee
+# When I try to access any path that begins with the following, then I see a 404 error:
+# - '/admin'
