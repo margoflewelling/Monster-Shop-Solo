@@ -5,17 +5,12 @@ class User::SessionsController < ApplicationController
     if user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:notice] = "Welcome #{user.name}! You are now logged in!"
-      if user.role == "merchant"
-        redirect_to "/merchant"
-      elsif user.role == "admin"
-        redirect_to "/admin"
-      else
-        redirect_to '/user/profile'
-      end
-
+      redirect_based_on_role(user.role)
     else
       flash[:notice] = "Your email or password is incorrect"
       redirect_to '/login'
     end
   end
+
+
 end
