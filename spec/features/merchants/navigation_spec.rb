@@ -15,7 +15,7 @@ RSpec.describe 'As a merchant' do
     click_button 'Log in'
 
     expect(merchant1.role).to eq("merchant")
-    expect(current_path).to eq('/user/profile')
+    expect(current_path).to eq('/merchant')
     expect(page).to have_content("Logged in as #{merchant1.name}")
 
     within 'nav' do
@@ -63,7 +63,7 @@ RSpec.describe 'As a merchant' do
       click_link "Log out"
     end
 
-    expect(current_path).to eq('/logout')
+    expect(current_path).to eq('/')
   end
 
   it 'does not have access to admin' do
@@ -78,7 +78,7 @@ RSpec.describe 'As a merchant' do
     visit "/admin"
     expect(page).to have_content("The page you were looking for doesn't exist.")
   end
-  
+
 end
 
 
