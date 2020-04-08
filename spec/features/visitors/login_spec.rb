@@ -80,13 +80,13 @@ RSpec.describe 'as a visitor', type: :feature do
     expect(current_path).to eq('/merchant')
   end
 
-  it "merchant can not visit the login page if they are already logged in" do
+  it "admin can not visit the login page if they are already logged in" do
     admin = User.create({name: "Jill", street_address: "22 dog st", city: "Fort Collins",
                          state: "CO", zip_code: "80375", email_address: "jill@example.com",
                          password: "password1", password_confirmation: "password1", role: 2
                         })
     visit '/login'
-    fill_in :email_address, with: "jill@example.com"
+    fill_in :email_address, with: "jisll@example.com"
     fill_in :password, with: "password1"
     within ("#login-form") do
       click_on "Log in"

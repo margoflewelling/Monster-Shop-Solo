@@ -17,7 +17,11 @@ class UsersController < ApplicationController
   end
 
   def logout
-
+    flash[:notice] = "Bye #{current_user.name}! You are now logged out."
+    session.delete(:cart)
+    session.delete(:user_id)
+    @current_user = nil
+    redirect_to '/'
   end
 
 

@@ -64,7 +64,7 @@ RSpec.describe 'As an admin' do
       click_link "Log out"
     end
 
-    expect(current_path).to eq('/logout')
+    expect(current_path).to eq('/')
   end
 
   it 'does not have access to merchant or cart' do
