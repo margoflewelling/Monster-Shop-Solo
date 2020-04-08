@@ -21,7 +21,7 @@ RSpec.describe 'As an admin' do
     fill_in :password, with: 'henry2004'
     click_button 'Log in'
 
-    expect(current_path).to eq('/user/profile')
+    expect(current_path).to eq('/admin')
     expect(page).to have_content("Logged in as #{admin.name}")
 
     within 'nav' do
