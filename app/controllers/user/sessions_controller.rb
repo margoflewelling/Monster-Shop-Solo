@@ -7,7 +7,7 @@ class User::SessionsController < ApplicationController
       redirect_to '/user/profile'
     else
       flash[:notice] = "Your email or password is incorrect"
-      render :new
+      redirect_to '/login'
     end
   end
 end

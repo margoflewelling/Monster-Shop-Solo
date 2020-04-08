@@ -4,7 +4,7 @@ RSpec.describe 'As a default user' do
   it 'I see the same links as a visitor' do
     user = User.create({name: "Bob", street_address: "22 dog st", city: "Fort Collins",
                          state: "CO", zip_code: "80375", email_address: "bob@example.com",
-                         password: "password1", password_confirmation: "password1"
+                         password: "password1", password_confirmation: "password1", role: 0
                         })
     visit '/'
 
@@ -50,12 +50,29 @@ RSpec.describe 'As a default user' do
       click_link "Profile"
     end
 
-    expect(current_path).to eq('user/profile')
+    expect(current_path).to eq('/user/profile')
 
     within 'nav' do
       click_link "Log out"
     end
 
-    expect(current_path).to eq('user/logout')
+    expect(current_path).to eq('/user/logout')
+  end
+
+  it 'I cannot log in with invalid credentials' do
+    user = User.create({name: "Bob", street_address: "22 dog st", city: "Fort Collins",
+                        state: "CO", zip_code: "80375", email_address: "bob@example.com",
+                        password: "password1", password_confirmation: "password1", role: 0
+                       })
+    visit '/'
+
+    click_link 'Log in'
+
+    fill_in :email_address, with: 'bob@example.com'
+    fill_in :password, with: 'passwor1'
+    click_button 'Log in'
+
+    expect(page).to have_content("Your email or password is incorrect")
+    expect(current_path).to eq('/login')
   end
 end
