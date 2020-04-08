@@ -81,12 +81,10 @@ RSpec.describe 'As a default user' do
                          state: "CO", zip_code: "80375", email_address: "bob@example.com",
                          password: "password1", password_confirmation: "password1", role: 0
                         })
-    visit '/'
-    click_link 'Log in'
-    fill_in :email_address, with: 'bob@example.com'
-    fill_in :password, with: 'password1'
-    click_button 'Log in'
+    
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
+    expect(user.role).to eq("user")
     visit "/merchant"
     expect(page).to have_content("The page you were looking for doesn't exist.")
 
