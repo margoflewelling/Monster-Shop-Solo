@@ -16,7 +16,9 @@ class UsersController < ApplicationController
     end
   end
 
+  def logout
 
+  end
 
 
   private

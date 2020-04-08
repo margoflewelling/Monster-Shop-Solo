@@ -20,6 +20,7 @@ RSpec.describe 'As a default user' do
     within 'nav' do
       expect(page).to have_no_link('Log in')
       expect(page).to have_no_link('Register')
+      expect(page).to have_no_link('Merchant Profile')
     end
 
     within 'nav' do
@@ -56,7 +57,7 @@ RSpec.describe 'As a default user' do
       click_link "Log out"
     end
 
-    expect(current_path).to eq('/user/logout')
+    expect(current_path).to eq('/logout')
   end
 
   it 'I cannot log in with invalid credentials' do

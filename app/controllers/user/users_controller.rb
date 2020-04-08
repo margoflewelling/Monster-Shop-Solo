@@ -4,7 +4,4 @@ class User::UsersController < User::BaseController
     @user = User.find(session[:user_id])
   end
 
-  def logout
-
-  end
 end
