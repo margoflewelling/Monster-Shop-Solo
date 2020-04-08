@@ -20,6 +20,7 @@ RSpec.describe 'As a default user' do
     within 'nav' do
       expect(page).to have_no_link('Log in')
       expect(page).to have_no_link('Register')
+      expect(page).to have_no_link('Merchant Profile')
     end
 
     within 'nav' do
