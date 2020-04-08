@@ -81,15 +81,19 @@ RSpec.describe 'As a default user' do
                          state: "CO", zip_code: "80375", email_address: "bob@example.com",
                          password: "password1", password_confirmation: "password1", role: 0
                         })
-    
+
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-
     expect(user.role).to eq("user")
-    visit "/merchant"
+
+    visit "/merchant/dashboard"
     expect(page).to have_content("The page you were looking for doesn't exist.")
 
-    visit "/admin"
+    visit "/admin/dashboard"
     expect(page).to have_content("The page you were looking for doesn't exist.")
+
+    visit "/admin/users"
+    expect(page).to have_content("The page you were looking for doesn't exist.")
+
   end
 
 end
