@@ -20,7 +20,7 @@ RSpec.describe("Orders Show Page") do
                            state: "CO", zip: "80375"})
       visit '/user/profile'
       click_on "My Orders"
-      expect(current_path).to eq("/profile/orders")
+      expect(current_path).to eq("/user/profile/orders")
     end
   end
 end
