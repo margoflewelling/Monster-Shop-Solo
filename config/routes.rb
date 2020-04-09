@@ -45,7 +45,7 @@ Rails.application.routes.draw do
     get '/profile/edit', to: 'users#edit'
     patch '/profile', to: 'users#update'
     post '/profile', to: 'sessions#create'
-    get "/orders", to: "users#orders"
+    get "/profile/orders", to: "users#orders"
   end
 
   resource :password, only: [:edit, :update]
