@@ -21,7 +21,24 @@ RSpec.describe "Items Index Page" do
       expect(page).to have_link(@pull_toy.merchant.name)
     end
 
-    it "I can see a list of all of the items except disabled items"do
+    # it "all images are links to their show page" do
+    #   visit '/items'
+
+      # expect(page).to have_link(@tire.image)
+      # expect(page).to have_link(@pull_toy.image)
+      # binding.pry
+      # find("img[src*='#{@tire.image}']").click
+
+
+    #   within "#item-#{@tire.id}" do
+    #    my_link = find(:xpath, "//a[contains(@href,'/items/#{@tire.id}')]")
+    #    my_link.click
+    #   end
+    #
+    #   expect(current_path).to eq("/items/#{@tire.id}")
+    # end
+
+    it "I can see a list of all of the items except disabled items" do
 
       visit '/items'
 
