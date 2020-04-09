@@ -94,11 +94,6 @@ describe Item, type: :model do
                                                       quantity: 3,
                                                       price: @chain.price
                                                       })
-      @item_order_3 =  @order_1.item_orders.create!({
-                                                      item: @gloves,
-                                                      quantity: 1,
-                                                      price: @gloves.price
-                                                      })
       @item_order_4 =  @order_1.item_orders.create!({
                                                       item: @helmet,
                                                       quantity: 6,
