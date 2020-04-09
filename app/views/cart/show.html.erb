@@ -30,9 +30,9 @@
       </td>
       <td>
         <center>
-          <p><%=quantity%></p>
-          <p>
-            <%= button_to "+", "/cart/#{item.id}/increment", form: {style: 'height: 40px; width: 35px; padding: 0; margin: 0;'}, method: :patch %>
+          <p><%=quantity%>
+            <%= button_to "+", "/cart/#{item.id}/increment", form: {style: 'height: 30px; width: 0px; padding: 0; margin: 0;'}, method: :patch %>
+            <%= button_to "-", "/cart/#{item.id}/decrement", form: {style: 'height: 30px; width: 0px; padding: 0; margin: 0;'}, method: :patch %>
           </p>
           <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
         </center>
