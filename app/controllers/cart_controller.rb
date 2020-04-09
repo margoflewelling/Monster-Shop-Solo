@@ -22,6 +22,34 @@ class CartController < ApplicationController
     redirect_to '/cart'
   end
 
+  def increment
+    item = Item.find(params[:item_id])
+    cart.contents.each do |item_id, quantity|
+      if item.id.to_s == item_id
+        if quantity < item.inventory
+          cart.contents[item_id] += 1
+        else
+          flash[:inventory_notice] = "Do not have enough of this item in stock, please choose another."
+        end
+      end
+    end
+    redirect_to '/cart'
+  end
+
+  def decrement
+    item = Item.find(params[:item_id])
+    cart.contents.each do |item_id, quantity|
+      if item.id.to_s == item_id
+        if quantity == 1
+          remove_item
+        else
+          cart.contents[item_id] -= 1
+          redirect_to '/cart'
+        end
+      end
+    end
+  end
+
 private
   def require_not_admin
     render file: "/public/404" if current_admin?
