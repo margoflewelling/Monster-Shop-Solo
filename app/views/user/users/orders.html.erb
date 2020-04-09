@@ -2,11 +2,11 @@
 
   <%@orders.each do |order|%>
   <section id = <%="#{order.id}" %>>
-    <%=link_to "Order ##{order.id}", "/order/#{order.id}"%> <br>
+    <h3><%=link_to "Order ##{order.id}", "/orders/#{order.id}"%> </h3>
     <%="Date ordered: #{order.created_at}"%><br>
     <%="Date updated: #{order.updated_at}"%><br>
     <%="Current Status: #{order.status}"%><br>
     <%="Number of Items: #{order.items.count}"%><br>
-    <%="Grand Total: #{order.grandtotal}"%><br>
+    <p>Grand Total: <%=number_to_currency(order.grandtotal)%></p>
   </section>
   <%end%>

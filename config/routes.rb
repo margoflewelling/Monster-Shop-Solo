@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   namespace :user do
     get '/profile', to: "users#profile"
     post '/profile', to: 'sessions#create'
-    get "/profile/orders", to: "users#orders"
+    get "/orders", to: "users#orders"
   end
 
   namespace :merchant do
