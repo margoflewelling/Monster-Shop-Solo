@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "As a registered user" do
-  it "can see all profile data except password on the profile page with link to edit profile data" do
+  it "can update user information except for password by clicking link Edit Profile Info" do
     user = User.create({name: "Bob", street_address: "22 dog st", city: "Fort Collins",
                          state: "CO", zip_code: "80375", email_address: "bob@example.com",
                          password: "password1", password_confirmation: "password1", role: 0
