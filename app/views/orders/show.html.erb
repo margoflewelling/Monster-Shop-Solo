@@ -1,8 +1,11 @@
 <section class = "status">
   <h3 align = "right">Order Status: <%=@order.status%> </h3>
   </section>
+
 <section class = "cancel">
-  <h4 align = "left"> <%=link_to "Cancel Order", "/orders/#{@order.id}", method: :delete %>
+  <%if @order.status != "Cancelled"%>
+    <h4 align = "left"> <%=link_to "Cancel Order", "/orders/#{@order.id}", method: :delete %>
+  <% end %>
 <section class = "shipping-address">
   <h1 align = "center">Shipping Info</h1>
   <table>
