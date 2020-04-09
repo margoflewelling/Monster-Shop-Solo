@@ -41,9 +41,10 @@ Rails.application.routes.draw do
     get '/profile', to: "users#profile" #'users#show'
     get '/profile/edit', to: 'users#edit'
     patch '/profile', to: 'users#update'
-    post '/profile', to: 'sessions#create' 
+    post '/profile', to: 'sessions#create'
   end
 
+  resource :password, only: [:edit, :update]
 
   namespace :merchant do
     get '/', to: "dashboard#index"
