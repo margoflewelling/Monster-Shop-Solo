@@ -16,6 +16,8 @@ class UsersController < ApplicationController
     end
   end
 
+  #should be destory action of sessions controller and should only have one
+  #sessions controller
   def logout
     flash[:notice] = "Bye #{current_user.name}! You are now logged out."
     session.delete(:cart)
