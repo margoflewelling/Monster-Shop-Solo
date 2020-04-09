@@ -1,5 +1,10 @@
 <h1>Logged in as <%=@user.name%></h1>
 
+
+<% if @user.has_orders? %>
+<%= link_to "My Orders", "/user/orders" %>
+<% end %>
+
 <h3>Profile Information</h3>
 
 <section>
