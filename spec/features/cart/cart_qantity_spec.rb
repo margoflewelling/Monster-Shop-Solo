@@ -16,29 +16,52 @@ RSpec.describe 'As a visitor' do
       click_on "Add To Cart"
       @items_in_cart = [@paper,@tire,@pencil]
     end
-    it 'I see a button to increment the count of items I want to purchase in my cart' do
-      visit '/cart'
+    describe 'I see a button to increment the count of items I want to purchase in my cart' do
+      it 'I can not increment past the items inventory amount' do
+        visit '/cart'
 
-      within "#cart-item-#{@tire.id}" do
-        click_button "+"
-        expect(page).to have_content(2)
+        within "#cart-item-#{@tire.id}" do
+          expect(page).to have_content(1)
 
-        click_button "+"
-        expect(page).to have_content(2)
+          click_button "+"
+          expect(page).to have_content(2)
+
+          click_button "+"
+          expect(page).to have_content(2)
+        end
+
+        expect(page).to have_content("Do not have enough of this item in stock, please choose another.")
       end
-
-      expect(page).to have_content("Do not have enough of this item in stock, please choose another.")
-
     end
 
-    it 'I see a button '
-end
+    describe 'I see a button to decrement the count of items I want to purchase in my cart' do
+      it 'When the count reaches zero the item is immediately removed from my cart' do
+        visit '/cart'
 
+        within "#cart-item-#{@tire.id}" do
+          expect(page).to have_content(1)
+
+          click_button "+"
+          expect(page).to have_content(2)
+
+          click_button "-"
+          expect(page).to have_content(1)
+
+          click_button "-"
+        end
+
+        expect(page).to have_no_content(@tire.name)
+        expect(page).to have_no_content(@tire.description)
+        expect(page).to have_no_content(@tire.price)
+      end
+    end
+end
 
 # As a visitor
 # When I have items in my cart
 # And I visit my cart
 # Next to each item in my cart
-# I see a button or link to increment the count of items I want
+# I see a button or link to decrement the count of items I want
 # to purchase
-# I cannot increment the count beyond the item's inventory size
+# If I decrement the count to 0 the item is immediately removed
+# from my cart
