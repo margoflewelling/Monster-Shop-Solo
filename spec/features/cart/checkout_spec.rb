@@ -64,13 +64,4 @@ RSpec.describe 'Cart show' do
     end
   end
 
-
 end
-
-# As a visitor
-# When I have items in my cart
-# And I visit my cart
-# I see information telling me I must register or log in to
-# finish the checkout process
-# The word "register" is a link to the registration page
-# The words "log in" is a link to the login page
