@@ -21,13 +21,13 @@ class User::UsersController < User::BaseController
       redirect_to :user_profile
     else
       flash[:error] = @user.errors.full_messages.to_sentence
-      render :edit
+      redirect_to :user_profile_edit
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :street_address, :city, :state, :zip_code, :email_address, :password, :confirm_password)
+    params.require(:user).permit(:name, :street_address, :city, :state, :zip_code, :email_address)
   end
 end
