@@ -31,6 +31,9 @@
       <td>
         <center>
           <p><%=quantity%></p>
+          <p>
+            <%= button_to "+", "/cart/#{item.id}/increment", form: {style: 'height: 40px; width: 35px; padding: 0; margin: 0;'}, method: :patch %>
+          </p>
           <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
         </center>
         </td>
@@ -46,5 +49,4 @@
 <% else %>
   <h3 align= "center">Cart is currently empty</h3>
 <% end %>
-<table>
 </center>
