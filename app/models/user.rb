@@ -18,16 +18,7 @@ class User < ApplicationRecord
 
 
   def has_orders?
-    orders = Order.where(name: name, address: street_address, city: city, state: state, zip: zip_code)
-    if orders.length > 0
-      true
-    else
-      false
-    end
-  end
-
-  def orders
-    Order.where(name: name, address: street_address, city: city, state: state, zip: zip_code)
+    !orders.nil?
   end
 
 end
