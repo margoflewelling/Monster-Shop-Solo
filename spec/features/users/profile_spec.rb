@@ -23,7 +23,7 @@ RSpec.describe "As a registered user" do
     expect(page).to have_content(user.zip_code)
     expect(page).to have_content(user.email_address)
     expect(page).to_not have_content(user.password)
-    expect(page).to_not have_content("Password")
     expect(page).to have_link("Edit Profile Info")
+    expect(page).to have_link("Edit Password")
   end
 end
