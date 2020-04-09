@@ -25,4 +25,13 @@ class Item <ApplicationRecord
     item_orders.empty?
   end
 
+  def self.most_popular_items
+    @most_popular_item_orders = ItemOrder.find_by_sql("SELECT item_id, sum(quantity) as sum FROM item_orders GROUP BY item_id ORDER BY sum DESC LIMIT 5")
+    @most_popular_item_orders.map {|item| Item.find(item.item_id).name }
+  end
+
+  def self.least_popular_items
+    @least_popular_item_orders = ItemOrder.find_by_sql("SELECT item_id, sum(quantity) as sum FROM item_orders GROUP BY item_id ORDER BY sum ASC LIMIT 5")
+    @least_popular_item_orders.map {|item| Item.find(item.item_id).name }
+  end
 end

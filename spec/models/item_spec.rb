@@ -48,4 +48,70 @@ describe Item, type: :model do
       expect(@chain.no_orders?).to eq(false)
     end
   end
+
+  describe "class methods" do
+    before(:each) do
+      @user = User.create({name: "Regina",
+                           street_address: "6667 Evil Ln",
+                           city: "Storybrooke",
+                           state: "ME",
+                           zip_code: "00435",
+                           email_address: "evilqueen@example.com",
+                           password: "henry2004",
+                           password_confirmation: "henry2004",
+                           role: 0
+                          })
+
+      @order_1 = Order.create({name: "Bob", address: "22 dog st", city: "Fort Collins",
+                                              state: "CO", zip: "80375", status: "Pending"})
+
+      @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      @chain = @meg.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
+      @gloves = @meg.items.create(name: "Gloves", description: "It's a glove!!", price: 25, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 40)
+      @locks = @meg.items.create(name: "Locks", description: "It's a chain!", price: 9, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 23)
+      @leggings = @meg.items.create(name: "Leggings", description: "It's a legging!", price: 30, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 59)
+      @helmet = @meg.items.create(name: "Helment", description: "It's a helmet!", price: 12, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 62)
+
+      @item_order_1 =  @order_1.item_orders.create!({
+                                                      item: @tire,
+                                                      quantity: 4,
+                                                      price: @tire.price
+                                                      })
+      @item_order_2 =  @order_1.item_orders.create!({
+                                                      item: @chain,
+                                                      quantity: 3,
+                                                      price: @chain.price
+                                                      })
+      @item_order_3 =  @order_1.item_orders.create!({
+                                                      item: @gloves,
+                                                      quantity: 1,
+                                                      price: @gloves.price
+                                                      })
+      @item_order_4 =  @order_1.item_orders.create!({
+                                                      item: @helmet,
+                                                      quantity: 6,
+                                                      price: @helmet.price
+                                                      })
+      @item_order_5 =  @order_1.item_orders.create!({
+                                                      item: @locks,
+                                                      quantity: 9,
+                                                      price: @locks.price
+                                                      })
+      @item_order_6 =  @order_1.item_orders.create!({
+                                                      item: @leggings,
+                                                      quantity: 20,
+                                                      price: @leggings.price
+                                                      })
+
+    end
+
+    it 'most_popular_items' do
+      expect(Item.most_popular_items).to eq(["Leggings", "Locks", "Helment", "Gatorskins", "Chain"])
+    end
+
+    it 'least_popular_items' do
+      expect(Item.least_popular_items).to eq(["Gloves", "Chain", "Gatorskins", "Helment", "Locks"])
+    end
+  end
 end

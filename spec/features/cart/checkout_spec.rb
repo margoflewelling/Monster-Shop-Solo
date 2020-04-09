@@ -76,12 +76,11 @@ RSpec.describe 'Cart show' do
 
       click_button "Create Order"
 
-      expect(current_path).to eq('/profile/orders')
+      order = Order.last
+
+      expect(current_path).to eq('/user/profile/orders')
       expect(page).to have_content("Thank you for placing your order!")
-      expect(page).to have_content(@tire.name)
-      expect(page).to have_content(@tire.price)
-      expect(page).to have_content(@paper.name)
-      expect(page).to have_content(@pencil.price)
+      expect(page).to have_content(order.id)
 
       within 'nav' do
       expect(page).to have_content("Cart: 0")
