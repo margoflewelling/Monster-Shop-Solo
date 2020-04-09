@@ -9,8 +9,8 @@ class User < ApplicationRecord
                         :zip_code,
                         :email_address
 
-  # add merchants controller(new create index show edit update destroy)
-  # on create length validation rails for password
+  has_many :orders
+
   enum role: {user: 0, merchant: 1, admin: 2}
 
   has_secure_password
