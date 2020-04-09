@@ -43,7 +43,17 @@ describe Item, type: :model do
 
     it 'no orders' do
       expect(@chain.no_orders?).to eq(true)
-      order = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      @user = User.create({name: "Regina",
+                           street_address: "6667 Evil Ln",
+                           city: "Storybrooke",
+                           state: "ME",
+                           zip_code: "00435",
+                           email_address: "evilqueen@example.com",
+                           password: "henry2004",
+                           password_confirmation: "henry2004",
+                           role: 0
+                          })
+      order = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: @user.id)
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
@@ -63,7 +73,8 @@ describe Item, type: :model do
                           })
 
       @order_1 = Order.create({name: "Bob", address: "22 dog st", city: "Fort Collins",
-                                              state: "CO", zip: "80375", status: "Pending"})
+                                              state: "CO", zip: "80375", status: "Pending",
+                                              user_id: @user.id})
 
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
