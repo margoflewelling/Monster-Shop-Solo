@@ -3,6 +3,16 @@ require 'rails_helper'
 RSpec.describe 'Cart show' do
   describe 'When I have added items to my cart' do
     before(:each) do
+      user = User.create({name: "Regina",
+                           street_address: "6667 Evil Ln",
+                           city: "Storybrooke",
+                           state: "ME",
+                           zip_code: "00435",
+                           email_address: "evilqueen@example.com",
+                           password: "henry2004",
+                           password_confirmation: "henry2004",
+                           role: 0
+                          })
       @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 
@@ -19,13 +29,30 @@ RSpec.describe 'Cart show' do
     end
 
     it 'Theres a link to checkout' do
-      visit "/cart"
+      visit '/'
+
+      click_link 'Log in'
+
+      fill_in :email_address, with: 'evilqueen@example.com'
+      fill_in :password, with: 'henry2004'
+      click_button 'Log in'
+
+      visit '/cart'
 
       expect(page).to have_link("Checkout")
 
       click_on "Checkout"
 
       expect(current_path).to eq("/orders/new")
+    end
+
+    it 'I must register or log in to check out' do
+      visit '/cart'
+
+      expect(page).to_not have_link("Checkout")
+      expect(page).to have_content("You must register or log in to finish checking out.")
+      expect(page).to have_link("register")
+      expect(page).to have_link("log in")
     end
   end
 
@@ -36,4 +63,14 @@ RSpec.describe 'Cart show' do
       expect(page).to_not have_link("Checkout")
     end
   end
+
+
 end
+
+# As a visitor
+# When I have items in my cart
+# And I visit my cart
+# I see information telling me I must register or log in to
+# finish the checkout process
+# The word "register" is a link to the registration page
+# The words "log in" is a link to the login page
