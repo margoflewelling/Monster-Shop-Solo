@@ -2,13 +2,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'welcome#index'
 
-  get "/merchants", to: "merchants#index"
-  get "/merchants/new", to: "merchants#new"
-  get "/merchants/:id", to: "merchants#show"
-  post "/merchants", to: "merchants#create"
-  get "/merchants/:id/edit", to: "merchants#edit"
-  patch "/merchants/:id", to: "merchants#update"
-  delete "/merchants/:id", to: "merchants#destroy"
+  resources :merchants
 
   get "/items", to: "items#index"
   get "/items/:id", to: "items#show"
@@ -38,18 +32,29 @@ Rails.application.routes.draw do
   get '/register', to: "users#new"
   post '/register', to: "users#create"
 
-  get '/logout', to: 'users#logout'
 
+  # don't namespace - create the routes below
+  # get '/profile', to: "users#show"
+  # get '/profile/edit', to: 'users#edit'
+  # patch '/profile', to: 'users#update'
   namespace :user do
-    get '/profile', to: "users#profile"
+    get '/profile', to: "users#profile" #'users#show'
+    get '/profile/edit', to: 'users#edit'
+    patch '/profile', to: 'users#update'
     post '/profile', to: 'sessions#create'
   end
+
+  resource :password, only: [:edit, :update]
 
   namespace :merchant do
     get '/', to: "dashboard#index"
   end
 
   get '/login', to: 'sessions#new'
+  get '/logout', to: 'users#logout'
+  # post '/login', to: 'sessions#create'
+  # post '/login', to: 'sessions#create'
+  # delete '/logout', to 'sessions#destroy'
 
   namespace :admin do
     get '/', to: 'dashboard#index'
