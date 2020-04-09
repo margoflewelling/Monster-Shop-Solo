@@ -26,4 +26,8 @@ class User < ApplicationRecord
     end
   end
 
+  def orders
+    Order.where(name: name, address: street_address, city: city, state: state, zip: zip_code)
+  end
+
 end

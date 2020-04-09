@@ -5,6 +5,8 @@ class User::UsersController < User::BaseController
   end
 
   def orders
+    @user = User.find(session[:user_id])
+    @orders = @user.orders
   end
-  
+
 end
