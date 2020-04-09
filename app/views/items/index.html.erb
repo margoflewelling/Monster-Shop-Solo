@@ -22,13 +22,29 @@
         <p> <%= item.description unless @merchant%> </p>
         <p>Price: <%=number_to_currency(item.price) %> </p>
         <p>Inventory: <%= item.inventory %> </p>
-      <% if item.active? %>
-        <p>Active</p>
-      <% else %>
-        <p>Inactive</p>
-          </section>
-      <% end %>
-      <% end %>
+        <% if item.active? %>
+          <p>Active</p>
+        <% else %>
+          <p>Inactive</p>
+        </section>
+        <% end %>
+    <% end %>
     </section>
-<% end %>
+  <% end %>
+  <% if ItemOrder.all != [] %>
+  <section class="merchant-stats">
+    <h3>Most Popular</h3>
+    <ul class="most-popular">
+      <% Item.most_popular_items.each do |item| %>
+      <li><%= item %></li>
+      <% end  %>
+    </ul>
+    <h3>Least Popular</h3>
+    <ul class="least-popular">
+      <% Item.least_popular_items.each do |item| %>
+      <li><%= item %></li>
+      <% end  %>
+    </ul>
+  </section>
+  <% end %>
 </section>
