@@ -54,6 +54,39 @@ RSpec.describe 'Cart show' do
       expect(page).to have_link("register")
       expect(page).to have_link("log in")
     end
+
+    it 'I can check out as a registered user' do
+      visit '/'
+
+      click_link 'Log in'
+
+      fill_in :email_address, with: 'evilqueen@example.com'
+      fill_in :password, with: 'henry2004'
+      click_button 'Log in'
+
+      visit '/cart'
+
+      click_on 'Checkout'
+
+      fill_in :name, with: @user.name
+      fill_in :address, with: @user.street_address
+      fill_in :city, with: @user.city
+      fill_in :state, with: @user.state
+      fill_in :zip, with: @user.zip_code
+
+      click_button "Create Order"
+
+      expect(current_path).to eq('/profile/orders')
+      expect(page).to have_content("Thank you for placing your order!")
+      expect(page).to have_content(@tire.name)
+      expect(page).to have_content(@tire.price)
+      expect(page).to have_content(@paper.name)
+      expect(page).to have_content(@pencil.price)
+
+      within 'nav' do
+      expect(page).to have_content("Cart: 0")
+      end
+    end
   end
 
   describe 'When I havent added items to my cart' do
@@ -61,31 +94,6 @@ RSpec.describe 'Cart show' do
       visit "/cart"
 
       expect(page).to_not have_link("Checkout")
-    end
-  end
-
-  it 'I can check out as a registered user' do
-    visit '/cart'
-
-    click_on 'Checkout'
-
-    fill_in :name, with: @user.name
-    fill_in :address, with: @user.street_address
-    fill_in :city, with: @user.city
-    fill_in :state, with: @user.state
-    fill_in :zip, with: @user.zip_code
-
-    click_button "Create Order"
-
-    expect(current_path).to eq('/profile/orders')
-    expect(page).to have_content("Thank you for placing your order!")
-    expect(page).to have_content(@tire.name)
-    expect(page).to have_content(@tire.price)
-    expect(page).to have_content(@paper.name)
-    expect(page).to have_content(@pencil.price)
-
-    within 'nav' do
-    expect(page).to have_content("Cart: 0")
     end
   end
 end
