@@ -13,5 +13,20 @@ describe User, type: :model do
     it { should validate_presence_of :password }
   end
 
+  describe 'instance methods' do
+    before :each do
+      @user = User.create({name: "Bob", street_address: "22 dog st", city: "Fort Collins",
+                           state: "CO", zip_code: "80375", email_address: "bob@example.com",
+                           password: "password1", password_confirmation: "password1", role: 0
+                          })
+      Order.create({name: "Bob", address: "22 dog st", city: "Fort Collins",
+                   state: "CO", zip: "80375"})
+
+    end
+    it 'has_orders' do
+      expect(@user.has_orders?).to eq(true)
+    end
+  end
+
 
 end

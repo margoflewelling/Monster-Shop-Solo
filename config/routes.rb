@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get "/orders/new", to: "orders#new"
   post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
+  delete "/orders/:id", to: "orders#destroy"
 
   get '/register', to: "users#new"
   post '/register', to: "users#create"
@@ -44,6 +45,7 @@ Rails.application.routes.draw do
     get '/profile/edit', to: 'users#edit'
     patch '/profile', to: 'users#update'
     post '/profile', to: 'sessions#create'
+    get "/orders", to: "users#orders"
   end
 
   resource :password, only: [:edit, :update]
