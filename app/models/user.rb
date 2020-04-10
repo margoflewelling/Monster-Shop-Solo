@@ -10,6 +10,7 @@ class User < ApplicationRecord
                         :email_address
 
   has_many :orders
+  belongs_to :merchant, optional: true
 
   enum role: {user: 0, merchant: 1, admin: 2}
 
