@@ -6,15 +6,13 @@
 <%= @merchant.zip %>
 
 <h2>My Orders</h2>
-<% @merchant.item_orders.each do |item_order| %>
-<div class = <%="Order-##{item_order.order_id}"%>>
-<ul>
-  <li><%=link_to "Order ##{item_order.order_id}", "/merchant/orders/#{item_order.order_id}"%></li>
-  <li><%=item_order.created_at%></li>
-  <li><%=@merchant.item_orders.sum(:quantity).where()%></li>
-  <li><%=item_order.grandtotal%></li>
+<% @merchant.pending_orders.each do |order| %>
+<div id=<%=order.id%>>
+  <ul>
+    <li><%=link_to "Order ##{order.id}", "/merchant/orders/#{order.id}"%></li>
+    <li>Created at: <%=order.created_at%></li>
+    <li>Total Number of Items in the Order: <%=order.item_orders.sum(:quantity)%></li>
+    <li>Total Value of Items in the Order:<%=order.grandtotal%></li>
   </ul>
-  <%end%>
-  </div>
-
- the total quantity of my items in the order
+<%end%>
+</div>
