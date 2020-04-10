@@ -23,15 +23,16 @@ RSpec.describe "Items Index Page" do
 
     # it "all images are links to their show page" do
     #   visit '/items'
-
-      # expect(page).to have_link(@tire.image)
-      # expect(page).to have_link(@pull_toy.image)
-      # binding.pry
-      # find("img[src*='#{@tire.image}']").click
-
-
+    #
+    #   expect(page).to have_link(@tire.image)
+    #   expect(page).to have_link(@pull_toy.image)
+    #   # binding.pry
+    #   my_link = find(:xpath, "//a[contains(@href,'/items/#{@tire.id}')]")
+    #
+    #   find("img[src*='#{@tire.image}']").click
+    #
+    #
     #   within "#item-#{@tire.id}" do
-    #    my_link = find(:xpath, "//a[contains(@href,'/items/#{@tire.id}')]")
     #    my_link.click
     #   end
     #

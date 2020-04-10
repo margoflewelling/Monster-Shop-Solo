@@ -10,6 +10,7 @@ class User < ApplicationRecord
                         :email_address
 
   has_many :orders
+  belongs_to :merchant, optional: true
 
   enum role: {user: 0, merchant: 1, admin: 2}
 
@@ -18,16 +19,7 @@ class User < ApplicationRecord
 
 
   def has_orders?
-    orders = Order.where(name: name, address: street_address, city: city, state: state, zip: zip_code)
-    if orders.length > 0
-      true
-    else
-      false
-    end
-  end
-
-  def orders
-    Order.where(name: name, address: street_address, city: city, state: state, zip: zip_code)
+    !orders.nil?
   end
 
 end

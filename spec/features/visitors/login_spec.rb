@@ -17,9 +17,10 @@ RSpec.describe 'as a visitor', type: :feature do
   end
 
   it "can login as a merchant user" do
+    meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
     merchant = User.create({name: "Fred", street_address: "22 dog st", city: "Fort Collins",
                          state: "CO", zip_code: "80375", email_address: "fred@example.com",
-                         password: "password1", password_confirmation: "password1", role: 1
+                         password: "password1", password_confirmation: "password1", role: 1, merchant_id: meg.id
                         })
     visit '/login'
     fill_in :email_address, with: "fred@example.com"
@@ -64,9 +65,10 @@ RSpec.describe 'as a visitor', type: :feature do
   end
 
   it "merchant can not visit the login page if they are already logged in" do
+    meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
     merchant = User.create({name: "Fred", street_address: "22 dog st", city: "Fort Collins",
                          state: "CO", zip_code: "80375", email_address: "fred@example.com",
-                         password: "password1", password_confirmation: "password1", role: 1
+                         password: "password1", password_confirmation: "password1", role: 1, merchant_id: meg.id
                         })
     visit '/login'
     fill_in :email_address, with: "fred@example.com"
