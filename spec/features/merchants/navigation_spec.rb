@@ -2,10 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'As a merchant' do
   it 'can see same links as default user in addition to a merchant dashboard link' do
+    meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
     merchant1 = User.create!({name: "Elmo", street_address: "123 Sesame St", city: "New York",
                              state: "NY", zip_code: "10001", email_address: "elmo@example.com",
                              password: "password1", password_confirmation: "password1",
-                             role: 1})
+                             role: 1, merchant_id: meg.id})
 
     visit '/'
     click_link 'Log in'
