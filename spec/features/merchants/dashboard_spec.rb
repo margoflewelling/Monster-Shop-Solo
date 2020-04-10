@@ -23,7 +23,7 @@ RSpec.describe 'As a merchant employee' do
     click_button 'Log in'
   end
 
-  xit 'I see the name and address of the merchant I work for on my dashboard' do
+  it 'I see the name and address of the merchant I work for on my dashboard' do
     visit '/merchant'
     expect(page).to have_content(@meg.name)
     expect(page).to have_content(@meg.address)
@@ -45,11 +45,12 @@ RSpec.describe 'As a merchant employee' do
     @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
     @order_2.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
     visit '/merchant'
-    save_and_open_page
-    # expect(page).to have_link("Order ##{@order_1.id}")
-    # click_on("Order ##{@order_2.id}")
-    # expect(current_path).to eq("/merchant/orders/#{@order_2.id}")
-    # visit '/merchant'
+
+    expect(page).to have_link("Order ##{@order_1.id}")
+    click_on("Order ##{@order_2.id}")
+    expect(current_path).to eq("/merchant/orders/#{@order_2.id}")
+    visit '/merchant'
+
     within("##{@order_1.id}") do
       expect(page).to have_content(@order_1.created_at)
       expect(page).to have_content(@order_1.items.sum(:quantity))
