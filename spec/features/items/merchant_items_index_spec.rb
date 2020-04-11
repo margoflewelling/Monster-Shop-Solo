@@ -65,7 +65,6 @@ RSpec.describe "Merchant Items Index Page" do
       visit "/merchant"
       click_link 'View My Items'
       expect(current_path).to eq("/merchant/items")
-      save_and_open_page
       within "#merch-item-#{@tire.id}" do
         expect(page).to have_content(@tire.name)
         expect(page).to have_content("Price: $#{@tire.price}")
@@ -75,29 +74,11 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Inventory: #{@tire.inventory}")
         click_link("Deactivate")
         expect(current_path).to eq("/merchant/items")
-        expect(page).to have_content("#{@tire.name} is no longer for sale")
         expect(page).to have_content("Inactive")
       end
+      expect(page).to have_content("#{@tire.name} is no longer for sale")
+      end
+
     end
 
-  end
 end
-
-
-
-# User Story 42, Merchant deactivates an item
-#
-# As a merchant employee
-# When I visit my items page
-# I see all of my items with the following info:
-#  - name
-# - description
-# - price
-# - image
-# - active/inactive status
-# - inventory
-# I see a link or button to deactivate the item next to each item that is active
-# And I click on the "deactivate" button or link for an item
-# I am returned to my items page
-# I see a flash message indicating this item is no longer for sale
-# I see the item is now inactive
