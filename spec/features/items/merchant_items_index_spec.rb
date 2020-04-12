@@ -138,7 +138,30 @@ RSpec.describe "Merchant Items Index Page" do
 
       expect(current_path).to eq("/merchant/items")
       expect(page).to have_content("Your item 'Helmet' has been saved")
+      expect(page).to have_css("img[src*='https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/HNNN2?wid=1144&hei=1144&fmt=jpeg&qlt=95&op_usm=0.5%2C0.5&.v=1570147746237']")
       expect(page).to have_content("Helmet")
+      expect(page).to have_content("Price: $20.00")
+      expect(page).to have_content("Inventory: 25")
+      expect(page).to have_content("Active")
+      expect(page).to have_link("Deactivate")
+      expect(page).to have_link("Delete")
+    end
+
+    it 'can add a new item without image' do
+      visit "/merchant/items"
+      click_link "Add New Item"
+      expect(current_path).to eq("/merchant/items/new")
+
+      fill_in :name, with: "Helmet"
+      fill_in :price, with: 20
+      fill_in :description, with: "Protect your head"
+      fill_in :inventory, with: 25
+      click_button "Create Item"
+
+      expect(current_path).to eq("/merchant/items")
+      expect(page).to have_content("Your item 'Helmet' has been saved")
+      expect(page).to have_content("Helmet")
+      expect(page).to have_css("img[src*='https://www.intemposoftware.com/uploads/blog/Blog_inventory_control.jpg']")
       expect(page).to have_content("Price: $20.00")
       expect(page).to have_content("Inventory: 25")
       expect(page).to have_content("Active")
@@ -147,21 +170,3 @@ RSpec.describe "Merchant Items Index Page" do
     end
   end
 end
-
-
-# As a merchant employee
-# When I visit my items page
-# I see a link to add a new item
-# When I click on the link to add a new item
-# I see a form where I can add new information about an item, including:
-# - the name of the item, which cannot be blank
-# - a description for the item, which cannot be blank
-# - a thumbnail image URL string, which CAN be left blank
-# - a price which must be greater than $0.00
-# - my current inventory count of this item which is 0 or greater
-#
-# When I submit valid information and submit the form
-# I am taken back to my items page
-# I see a flash message indicating my new item is saved
-# I see the new item on the page, and it is enabled and available for sale
-# If I left the image field blank, I see a placeholder image for the thumbnail
