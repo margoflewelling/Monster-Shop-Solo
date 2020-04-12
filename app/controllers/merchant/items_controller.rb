@@ -7,9 +7,14 @@ class Merchant::ItemsController < Merchant::BaseController
 
   def update
     item = Item.find(params[:item_id])
-    item.update(active?: false)
+    if params[:activate_or_deactivate] == "deactivate"
+      item.update(active?: false)
+      flash[:notice] = "#{item.name} is no longer for sale"
+    elsif params[:activate_or_deactivate] == "activate"
+      item.update(active?: true)
+      flash[:notice] = "#{item.name} is now available for sale"
+    end
     redirect_to "/merchant/items"
-    flash[:notice] = "#{item.name} is no longer for sale"
   end
 
 end
