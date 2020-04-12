@@ -49,12 +49,10 @@ Rails.application.routes.draw do
     get '/', to: "dashboard#index"
     get '/orders/:id', to: "dashboard#index"
     get '/items', to: "items#index"
-<<<<<<< HEAD
-    get '/items/:id', to: "items#show"
-=======
+    get '/items/new', to: "items#new"
+    post '/items', to: "items#create"
     patch '/items/:item_id', to: "items#update"
     delete '/items/:item_id', to: "items#destroy"
->>>>>>> f4e83b54aaa556bec4879013e86760d2a3bd8233
   end
 
   get '/login', to: 'sessions#new'
