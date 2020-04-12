@@ -28,8 +28,11 @@
         <% else %>
           <p>Inactive</p>
           <%= link_to "Activate", "/merchant/items/#{item.id}?activate_or_deactivate=activate", method: :patch %>
-        </section>
-        <% end %>
+          <% end %>
+          <% if item.item_orders == [] %>
+            <%= link_to "Delete", "/merchant/items/#{item.id}", method: :delete %>
+            <% end %>
+          </section>
     <% end %>
     </section>
   <% end %>
