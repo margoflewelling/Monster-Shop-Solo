@@ -88,42 +88,66 @@ RSpec.describe "Merchant Items Index Page" do
         expect(current_path).to eq("/merchant/items")
         expect(page).to have_content("Inactive")
       end
+
       expect(page).to have_content("#{@tire.name} is no longer for sale")
+    end
+
+    it "can deactivate an item from their items page" do
+      visit "/merchant"
+      click_link 'View My Items'
+      expect(current_path).to eq("/merchant/items")
+      within "#merch-item-#{@shifter.id}" do
+        expect(page).to have_content(@shifter.name)
+        expect(page).to have_content("Price: $#{@shifter.price}")
+        expect(page).to have_css("img[src*='#{@shifter.image}']")
+        expect(page).to have_content("Inactive")
+        expect(page).to_not have_content(@shifter.description)
+        expect(page).to have_content("Inventory: #{@shifter.inventory}")
+        click_link("Activate")
+        expect(current_path).to eq("/merchant/items")
+        expect(page).to have_content("Active")
       end
 
-      it "can deactivate an item from their items page" do
-        visit "/merchant"
-        click_link 'View My Items'
-        expect(current_path).to eq("/merchant/items")
-        within "#merch-item-#{@shifter.id}" do
-          expect(page).to have_content(@shifter.name)
-          expect(page).to have_content("Price: $#{@shifter.price}")
-          expect(page).to have_css("img[src*='#{@shifter.image}']")
-          expect(page).to have_content("Inactive")
-          expect(page).to_not have_content(@shifter.description)
-          expect(page).to have_content("Inventory: #{@shifter.inventory}")
-          click_link("Activate")
-          expect(current_path).to eq("/merchant/items")
-          expect(page).to have_content("Active")
-        end
-        expect(page).to have_content("#{@shifter.name} is now available for sale")
-        end
-
-        it "can delete an item that has never been ordered" do
-          visit "/merchant/items"
-          within "#merch-item-#{@shifter.id}" do
-            expect(page).to_not have_link("Delete")
-          end
-          within "#merch-item-#{@chain.id}" do
-            click_link("Delete")
-          end
-          expect(current_path).to eq("/merchant/items")
-          expect(page).to have_content("#{@chain.name} has been deleted")
-          expect(page).to_not have_content(@chain.description)
-        end
-
+      expect(page).to have_content("#{@shifter.name} is now available for sale")
     end
+
+    it "can delete an item that has never been ordered" do
+      visit "/merchant/items"
+      within "#merch-item-#{@shifter.id}" do
+        expect(page).to_not have_link("Delete")
+      end
+      within "#merch-item-#{@chain.id}" do
+        click_link("Delete")
+      end
+      expect(current_path).to eq("/merchant/items")
+      expect(page).to have_content("#{@chain.name} has been deleted")
+      expect(page).to_not have_content(@chain.description)
+    end
+
+    it 'can add a new item' do
+      visit "/merchant/items"
+      click_link "Add New Item"
+      expect(current_path).to eq("/merchant/items/new")
+
+      fill_in :name, with: "Helmet"
+      fill_in :price, with: 20
+      fill_in :description, with: "Protect your head"
+      fill_in :image, with: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/HNNN2?wid=1144&hei=1144&fmt=jpeg&qlt=95&op_usm=0.5%2C0.5&.v=1570147746237"
+      fill_in :inventory, with: 25
+      click_button "Create Item"
+
+      expect(current_path).to eq("/merchant/items")
+      expect(page).to have_content("Your item 'Helmet' has been saved")
+      expect(page).to have_content("Helmet")
+      expect(page).to have_content("Price: $20.00")
+      expect(page).to have_content("Inventory: 25")
+      expect(page).to have_content("Active")
+      expect(page).to have_link("Deactivate")
+      expect(page).to have_link("Delete")
+    end
+  end
 end
+
 
 # As a merchant employee
 # When I visit my items page
