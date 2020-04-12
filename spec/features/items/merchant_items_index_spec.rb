@@ -158,15 +158,40 @@ RSpec.describe "Merchant Items Index Page" do
       fill_in :inventory, with: 25
       click_button "Create Item"
 
+      new_item = Item.last
+
       expect(current_path).to eq("/merchant/items")
       expect(page).to have_content("Your item 'Helmet' has been saved")
-      expect(page).to have_content("Helmet")
+      expect(page).to have_content(new_item.name)
       expect(page).to have_css("img[src*='https://www.intemposoftware.com/uploads/blog/Blog_inventory_control.jpg']")
-      expect(page).to have_content("Price: $20.00")
-      expect(page).to have_content("Inventory: 25")
+      expect(page).to have_content(new_item.price)
+      expect(page).to have_content(new_item.inventory)
       expect(page).to have_content("Active")
       expect(page).to have_link("Deactivate")
       expect(page).to have_link("Delete")
     end
+
+    it 'cannot add incorrect or missing data and will repopulate form with previous data' do
+      visit "/merchant/items"
+      click_link "Add New Item"
+      expect(current_path).to eq("/merchant/items/new")
+
+
+      fill_in :price, with: -20
+      click_button "Create Item"
+
+      expect(page).to have_content("Name can't be blank, Description can't be blank, Inventory can't be blank, Inventory is not a number, and Price must be greater than 0")
+      expect(page).to have_selector("input[value='-$20.00']")
+      expect(page).to have_button("Create Item")
+    end
   end
 end
+
+# User Story 46, Merchant cannot add an item if details are bad/missing
+#
+# As a merchant employee
+# When I try to add a new item
+# If any of my data is incorrect or missing (except image)
+# Then I am returned to the form
+# I see one or more flash messages indicating each error I caused
+# All fields are re-populated with my previous data

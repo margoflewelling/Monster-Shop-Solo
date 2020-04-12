@@ -1,19 +1,19 @@
 <center>
-  <%= form_tag path, method: method do %>
-    <%= label_tag :name %>
-    <%= text_field_tag :name, item.name%>
+  <%= form_for @item, :url => path, method: method do |f|%>
+    <%= f.label :name %>
+    <%= f.text_field :name, id:"name"%>
 
-    <%= label_tag :description %>
-    <%= text_field_tag :description, item.description %>
+    <%= f.label :description %>
+    <%= f.text_field :description, id:"description" %>
 
-    <%= label_tag :price %>
-    <%= text_field_tag :price, number_to_currency(item.price) %>
+    <%= f.label :price %>
+    <%= f.text_field :price, value: params[:item].nil? ? number_to_currency(f.object.price) : number_to_currency(params[:item][:price]), id:"price" %>
 
-    <%= label_tag :image %>
-    <%= text_field_tag :image, item.image %>
+    <%= f.label :image %>
+    <%= f.text_field :image, id:"image" %>
 
-    <%= label_tag :inventory %>
-    <%= text_field_tag :inventory, item.inventory %>
+    <%= f.label :inventory %>
+    <%= f.text_field :inventory, id:"inventory" %>
 
     <%= submit_tag button_name %>
   <% end %>
