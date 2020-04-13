@@ -54,6 +54,8 @@ Rails.application.routes.draw do
     get '/', to: "dashboard#index"
     get '/orders/:id', to: "dashboard#index"
     get '/items', to: "items#index"
+    patch '/items/:item_id', to: "items#update"
+    delete '/items/:item_id', to: "items#destroy"
   end
 
   get '/login', to: 'sessions#new'
@@ -66,5 +68,8 @@ Rails.application.routes.draw do
     get '/', to: 'dashboard#index'
     get '/users', to: 'users#user_names'
     get '/merchants/:merchant_id', to: 'merchant#show'
+    get '/merchants', to: 'merchant#index'
+    patch '/merchant/:merchant_id/disable', to: 'merchant#disable'
+    patch '/merchant/:merchant_id/enable', to: 'merchant#enable'
   end
 end
