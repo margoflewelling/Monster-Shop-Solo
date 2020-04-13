@@ -45,7 +45,7 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
     it 'I can click an edit item button to update the item info' do
       visit "/merchant"
       click_link 'View My Items'
-      within("#merch-item-#{@tire.id}") do
+      within("#item-#{@tire.id}") do
         click_link "Edit this Item"
       end
 
@@ -60,7 +60,7 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
 
       expect(current_path).to eq("/merchant/items")
       expect(page).to have_content("Your item 'Helmet' has been updated")
-      within("#merch-item-#{@tire.id}") do
+      within("#item-#{@tire.id}") do
         expect(page).to have_content("Helmet")
         expect(page).to have_content("$20.00")
         expect(page).to have_css("img[src*='https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/HNNN2?wid=1144&hei=1144&fmt=jpeg&qlt=95&op_usm=0.5%2C0.5&.v=1570147746237']")
@@ -72,7 +72,7 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
     it "cannot update item if data is incorrect or missing" do
       visit "/merchant"
       click_link 'View My Items'
-      within("#merch-item-#{@tire.id}") do
+      within("#item-#{@tire.id}") do
         click_link "Edit this Item"
       end
 

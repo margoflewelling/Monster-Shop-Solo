@@ -46,7 +46,7 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
       visit "/merchant"
       click_link 'View My Items'
       expect(current_path).to eq("/merchant/items")
-      within "#merch-item-#{@tire.id}" do
+      within "#item-#{@tire.id}" do
         expect(page).to have_content(@tire.name)
         expect(page).to have_content("Price: $#{@tire.price}")
         expect(page).to have_css("img[src*='#{@tire.image}']")
@@ -65,7 +65,7 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
       visit "/merchant"
       click_link 'View My Items'
       expect(current_path).to eq("/merchant/items")
-      within "#merch-item-#{@shifter.id}" do
+      within "#item-#{@shifter.id}" do
         expect(page).to have_content(@shifter.name)
         expect(page).to have_content("Price: $#{@shifter.price}")
         expect(page).to have_css("img[src*='#{@shifter.image}']")
@@ -82,10 +82,10 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
 
     it "can delete an item that has never been ordered" do
       visit "/merchant/items"
-      within "#merch-item-#{@shifter.id}" do
+      within "#item-#{@shifter.id}" do
         expect(page).to_not have_link("Delete")
       end
-      within "#merch-item-#{@chain.id}" do
+      within "#item-#{@chain.id}" do
         click_link("Delete")
       end
       expect(current_path).to eq("/merchant/items")
