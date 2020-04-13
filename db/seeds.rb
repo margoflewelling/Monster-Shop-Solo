@@ -22,14 +22,24 @@ pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!
 dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 
 #users
+bob = User.create({name: "Bob",
+                   street_address: "22 dog st",
+                   city: "Fort Collins",
+                   state: "CO",
+                   zip_code: "80375",
+                   email_address: "user@example.com",
+                   password: "password_regular",
+                   password_confirmation: "password_regular",
+                   role: 0
+                    })
 regina = User.create({name: "Regina",
                        street_address: "6667 Evil Ln",
                        city: "Storybrooke",
                        state: "ME",
                        zip_code: "00435",
-                       email_address: "evilqueen@example.com",
-                       password: "henry2004",
-                       password_confirmation: "henry2004",
+                       email_address: "merchant@example.com",
+                       password: "password_merchant",
+                       password_confirmation: "password_merchant",
                        role: 1,
                        merchant_id: bike_shop.id
                       })
@@ -38,8 +48,8 @@ bert = User.create({name: "Bert",
                       city: "New York City",
                       state: "NY",
                       zip_code: "10001",
-                      email_address: "bert@example.com",
-                      password: "abc123",
-                      password_confirmation: "abc123",
+                      email_address: "admin@example.com",
+                      password: "password_admin",
+                      password_confirmation: "password_admin",
                       role: 2
                      })
