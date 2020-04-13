@@ -61,14 +61,12 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_css("img[src*='#{@pull_toy.image}']")
       end
 
-      within "#item-#{@dog_bone.id}" do
-        expect(page).to have_no_link(@dog_bone.name)
-        expect(page).to have_no_content(@dog_bone.description)
-        expect(page).to have_no_content("Price: $#{@dog_bone.price}")
-        expect(page).to have_no_content("Inactive")
-        expect(page).to have_no_content("Inventory: #{@dog_bone.inventory}")
-        expect(page).to have_no_css("img[src*='#{@dog_bone.image}']")
-      end
+      expect(page).to have_no_link(@dog_bone.name)
+      expect(page).to have_no_content(@dog_bone.description)
+      expect(page).to have_no_content("Price: $#{@dog_bone.price}")
+      expect(page).to have_no_content("Inactive")
+      expect(page).to have_no_content("Inventory: #{@dog_bone.inventory}")
+      expect(page).to have_no_css("img[src*='#{@dog_bone.image}']")
     end
   end
 end
