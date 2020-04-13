@@ -36,6 +36,7 @@
       <th>Quantity</th>
       <th>Subtotal</th>
       <th>Image</th>
+      <th>Status</th>
     </tr>
   <% @order.item_orders.each do |item_order|%>
     <tr>
@@ -46,7 +47,7 @@
         <td><p><%= item_order.quantity%></p></td>
         <td><p><%= number_to_currency(item_order.subtotal)%></p></td>
         <td><img src="<%=item_order.item.image%>" width="30"></td>
-
+        <td><p><%= item_order.fulfilled? ? "Fulfilled":"Unfulfilled"%></p></td>
       </section>
     </tr>
   <% end %>
