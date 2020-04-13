@@ -26,17 +26,21 @@ class Merchant::ItemsController < Merchant::BaseController
     @item = Item.find(params[:item_id])
   end
 
-  def update
+  def status
     @item = Item.find(params[:item_id])
     if params[:activate_or_deactivate] == "deactivate"
       @item.update(active?: false)
       flash[:notice] = "#{@item.name} is no longer for sale"
-      redirect_to "/merchant/items"
     elsif params[:activate_or_deactivate] == "activate"
       @item.update(active?: true)
       flash[:notice] = "#{@item.name} is now available for sale"
-      redirect_to "/merchant/items"
-    elsif @item.update(item_params) && @item.save
+    end
+    redirect_to "/merchant/items"
+  end
+
+  def update
+    @item = Item.find(params[:item_id])
+    if @item.update(item_params) && @item.save
       flash[:notice] = "Your item '#{@item.name}' has been updated"
       redirect_to "/merchant/items"
     else
