@@ -53,10 +53,8 @@ Rails.application.routes.draw do
     get '/items/:item_id/edit', to: "items#edit"
     post '/items', to: "items#create"
 
-    patch '/items/:item_id', to: "items#activate"
-    patch '/items/:item_id/edit' to: "items#update"
-
-
+    patch '/items/:item_id/status', to: "items#status"
+    patch '/items/:item_id', to: "items#update"
 
     delete '/items/:item_id', to: "items#destroy"
   end
