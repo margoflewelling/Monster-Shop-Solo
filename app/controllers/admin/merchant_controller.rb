@@ -9,30 +9,18 @@ class Admin::MerchantController < Admin::BaseController
   end
 
   def disable
-    @merchants = Merchant.all
-    @merchants.each do |merchant|
-      merchant.users.each do |user|
-        if user.merchant_id == merchant.id
-          flash[:notice] = "#{merchant.name}'s account is now disabled"
-          merchant.update(active?: false)
-          merchant.deactivate_items
-        end
-      end
-    end
+    merchant = Merchant.find(params[:merchant_id])
+    merchant.update(active?: false)
+    merchant.deactivate_items
+    flash[:notice] = "#{merchant.name}'s account is now disabled"
     redirect_to '/admin/merchants'
   end
 
   def enable
-    @merchants = Merchant.all
-    @merchants.each do |merchant|
-      merchant.users.each do |user|
-        if user.merchant_id == merchant.id
-          flash[:notice] = "#{merchant.name}'s account is now enabled"
-          merchant.update(active?: true)
-          merchant.activate_items
-        end
-      end
-    end
+    merchant = Merchant.find(params[:merchant_id])
+    merchant.update(active?: true)
+    merchant.activate_items
+    flash[:notice] = "#{merchant.name}'s account is now enabled"
     redirect_to '/admin/merchants'
   end
 end
