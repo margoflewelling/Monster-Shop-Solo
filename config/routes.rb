@@ -35,13 +35,8 @@ Rails.application.routes.draw do
   get '/register', to: "users#new"
   post '/register', to: "users#create"
 
-
-  # don't namespace - create the routes below
-  # get '/profile', to: "users#show"
-  # get '/profile/edit', to: 'users#edit'
-  # patch '/profile', to: 'users#update'
   namespace :user do
-    get '/profile', to: "users#profile" #'users#show'
+    get '/profile', to: "users#profile"
     get '/profile/edit', to: 'users#edit'
     patch '/profile', to: 'users#update'
     post '/profile', to: 'sessions#create'
@@ -54,15 +49,18 @@ Rails.application.routes.draw do
     get '/', to: "dashboard#index"
     get '/orders/:id', to: "dashboard#index"
     get '/items', to: "items#index"
+    get '/items/new', to: "items#new"
+    get '/items/:item_id/edit', to: "items#edit"
+    post '/items', to: "items#create"
+
+    patch '/items/:item_id/status', to: "items#status"
     patch '/items/:item_id', to: "items#update"
+
     delete '/items/:item_id', to: "items#destroy"
   end
 
   get '/login', to: 'sessions#new'
   get '/logout', to: 'users#logout'
-  # post '/login', to: 'sessions#create'
-  # post '/login', to: 'sessions#create'
-  # delete '/logout', to 'sessions#destroy'
 
   namespace :admin do
     get '/', to: 'dashboard#index'

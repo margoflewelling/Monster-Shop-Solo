@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Merchant Items Index Page" do
+RSpec.describe "Merchant Items Index Page", type: :feature do
   describe "When I visit the merchant items page" do
     before(:each) do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -42,37 +42,6 @@ RSpec.describe "Merchant Items Index Page" do
       click_button 'Log in'
     end
 
-    it 'shows me a list of that merchants items' do
-      visit "merchants/#{@meg.id}/items"
-
-      within "#item-#{@tire.id}" do
-        expect(page).to have_content(@tire.name)
-        expect(page).to have_content("Price: $#{@tire.price}")
-        expect(page).to have_css("img[src*='#{@tire.image}']")
-        expect(page).to have_content("Active")
-        expect(page).to_not have_content(@tire.description)
-        expect(page).to have_content("Inventory: #{@tire.inventory}")
-      end
-
-      within "#item-#{@chain.id}" do
-        expect(page).to have_content(@chain.name)
-        expect(page).to have_content("Price: $#{@chain.price}")
-        expect(page).to have_css("img[src*='#{@chain.image}']")
-        expect(page).to have_content("Active")
-        expect(page).to_not have_content(@chain.description)
-        expect(page).to have_content("Inventory: #{@chain.inventory}")
-      end
-
-      within "#item-#{@shifter.id}" do
-        expect(page).to have_content(@shifter.name)
-        expect(page).to have_content("Price: $#{@shifter.price}")
-        expect(page).to have_css("img[src*='#{@shifter.image}']")
-        expect(page).to have_content("Inactive")
-        expect(page).to_not have_content(@shifter.description)
-        expect(page).to have_content("Inventory: #{@shifter.inventory}")
-      end
-    end
-
     it "can deactivate an item from their items page" do
       visit "/merchant"
       click_link 'View My Items'
@@ -88,6 +57,7 @@ RSpec.describe "Merchant Items Index Page" do
         expect(current_path).to eq("/merchant/items")
         expect(page).to have_content("Inactive")
       end
+
       expect(page).to have_content("#{@tire.name} is no longer for sale")
     end
 
@@ -106,6 +76,7 @@ RSpec.describe "Merchant Items Index Page" do
         expect(current_path).to eq("/merchant/items")
         expect(page).to have_content("Active")
       end
+
       expect(page).to have_content("#{@shifter.name} is now available for sale")
     end
 
