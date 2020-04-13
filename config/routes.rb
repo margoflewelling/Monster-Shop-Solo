@@ -54,6 +54,7 @@ Rails.application.routes.draw do
     post '/items', to: "items#create"
 
     patch '/items/:item_id/status', to: "items#status"
+    patch '/items/:order_id/:item_id/fulfillment', to: "items#fulfill"
     patch '/items/:item_id', to: "items#update"
 
     delete '/items/:item_id', to: "items#destroy"

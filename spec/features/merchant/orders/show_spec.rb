@@ -32,6 +32,8 @@ RSpec.describe 'As a merchant employee' do
 
       @item_order_1 =  @order_1.item_orders.create!({ item: @tire, quantity: 3, price: @tire.price })
       @item_order_2 =  @order_1.item_orders.create!({ item: @paper, quantity: 2, price: @paper.price })
+      @item_order_3 =  @order_1.item_orders.create!({ item: @chain, quantity: 6, price: @chain.price })
+
 
     end
     it 'I see the name and address of whom created the order && only items from my merchant' do
@@ -55,5 +57,32 @@ RSpec.describe 'As a merchant employee' do
       expect(page).to have_no_content("Price: #{@paper.price}")
       expect(page).to have_no_content("Quantity: #{@item_order_2.quantity}")
     end
+
+    it "can fulfill an item if there is enough inventory" do
+      visit '/merchant'
+      click_link "Order ##{@order_1.id}"
+
+      within "##{@tire.name}" do
+        expect(page).to have_link("Fulfill")
+        click_on("Fulfill")
+      end
+      @tire.reload
+      expect(current_path).to eq("/merchant/orders/#{@order_1.id}")
+      expect(page).to have_content("You have fulfilled #{@tire.name}")
+      within "##{@tire.name}" do
+        expect(page).to have_content("Status: Fulfilled")
+      end
+      within "##{@chain.name}" do
+        expect(page).to_not have_link("Fulfill")
+        expect(page).to have_content("Not enough inventory to fulfill #{@chain.name}")
+      end
+      within "##{@tire.name}" do
+        expect(page).to_not have_link("Fulfill")
+      end
+      expect(@tire.inventory).to eq(9)
+      @chain.reload
+      expect(@chain.inventory).to eq(5)
+    end
+
+    end
   end
-end
