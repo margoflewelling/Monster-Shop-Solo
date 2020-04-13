@@ -22,16 +22,27 @@ class Merchant::ItemsController < Merchant::BaseController
     end
   end
 
+  def edit
+    @item = Item.find(params[:item_id])
+  end
+
   def update
-    item = Item.find(params[:item_id])
+    @item = Item.find(params[:item_id])
     if params[:activate_or_deactivate] == "deactivate"
-      item.update(active?: false)
-      flash[:notice] = "#{item.name} is no longer for sale"
+      @item.update(active?: false)
+      flash[:notice] = "#{@item.name} is no longer for sale"
+      redirect_to "/merchant/items"
     elsif params[:activate_or_deactivate] == "activate"
-      item.update(active?: true)
-      flash[:notice] = "#{item.name} is now available for sale"
+      @item.update(active?: true)
+      flash[:notice] = "#{@item.name} is now available for sale"
+      redirect_to "/merchant/items"
+    elsif @item.update(item_params) && @item.save
+      flash[:notice] = "Your item '#{@item.name}' has been updated"
+      redirect_to "/merchant/items"
+    else
+      flash[:error] = @item.errors.full_messages.to_sentence
+      render :edit
     end
-    redirect_to "/merchant/items"
   end
 
   def destroy
