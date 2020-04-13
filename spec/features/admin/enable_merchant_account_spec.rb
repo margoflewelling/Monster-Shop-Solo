@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.describe 'As an admin' do
   describe 'When I visit the admin merchant page' do
     before(:each) do
+      @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      @brian = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203, active?:false)
+
       @regina = User.create({name: "Regina",
                              street_address: "6667 Evil Ln",
                              city: "Storybrooke",
@@ -12,9 +15,8 @@ RSpec.describe 'As an admin' do
                              password: "henry2004",
                              password_confirmation: "henry2004",
                              role: 2,
+                             merchant_id: @brian.id
                             })
-      @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
-      @brian = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203, active?:false)
 
       @tire = @brian.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", active?:false, inventory: 12)
       @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", active?:false, inventory: 32)
