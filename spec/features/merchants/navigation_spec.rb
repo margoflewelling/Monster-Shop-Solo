@@ -79,13 +79,4 @@ RSpec.describe 'As a merchant' do
     visit "/admin"
     expect(page).to have_content("The page you were looking for doesn't exist.")
   end
-
 end
-
-
-
-
-#
-# As a merchant employee
-# When I try to access any path that begins with the following, then I see a 404 error:
-# - '/admin'
