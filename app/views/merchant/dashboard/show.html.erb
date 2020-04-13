@@ -1,0 +1,12 @@
+<%= @order.name %>
+<%= @order.address %>
+<%= @order.city %>
+<%= @order.state %>
+<%= @order.zip %>
+
+<% @merchant_items.each do |item| %>
+  <%= link_to "#{item.name}", "/items/#{item.id}" %>
+  <%= item.image %>
+  <p>Price: <%= item.price %></p>
+  <p>Quantity: <%= item.item_orders.where("item_orders.order_id =?", @order.id).first.quantity %></p>
+<% end %>
