@@ -60,5 +60,11 @@ describe Merchant, type: :model do
       expect(@meg.distinct_cities).to eq(["Denver","Hershey"])
     end
 
+    it 'deactivate_items' do
+      @meg.update(active?: false)
+      @meg.deactivate_items
+
+      expect(@tire.active?).to be_falsey
+    end
   end
 end
