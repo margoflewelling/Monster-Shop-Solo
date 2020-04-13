@@ -9,6 +9,7 @@ class Merchant <ApplicationRecord
                         :state,
                         :zip
 
+  validates_inclusion_of :active?, :in => [true, false]
 
   def no_orders?
     item_orders.empty?
@@ -28,6 +29,12 @@ class Merchant <ApplicationRecord
 
   def pending_orders
     Order.joins(:items).where(items: {merchant_id: self.id}).where(orders: {status: "Pending"}).distinct
+  end
+
+  def deactivate_items
+    if !active?
+      items.each { |item| item.update(active?: false) }
+    end
   end
 
 end
