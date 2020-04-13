@@ -56,13 +56,14 @@ RSpec.describe 'As a merchant employee' do
       expect(page).to have_content(@order_1.items.sum(:quantity))
       expect(page).to have_content(@order_1.grandtotal)
     end
+
     within("##{@order_2.id}") do
       expect(page).to have_content(@order_2.created_at)
       expect(page).to have_content(@order_2.items.sum(:quantity))
       expect(page).to have_content(@order_2.grandtotal)
     end
 
-    expect(page).to_not have_content(@order_3.id)
+    expect(page).to_not have_content("Total Value of Items in the Order: $#{@order_3.grandtotal}")
   end
 
   it 'I see order information' do
