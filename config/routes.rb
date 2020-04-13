@@ -50,6 +50,7 @@ Rails.application.routes.draw do
     get '/orders/:id', to: "dashboard#index"
     get '/items', to: "items#index"
     get '/items/new', to: "items#new"
+    get '/items/:item_id/edit', to: "items#edit"
     post '/items', to: "items#create"
     patch '/items/:item_id', to: "items#update"
     delete '/items/:item_id', to: "items#destroy"
