@@ -33,3 +33,13 @@ regina = User.create({name: "Regina",
                        role: 1,
                        merchant_id: bike_shop.id
                       })
+bert = User.create({name: "Bert",
+                      street_address: "123 Sesame St.",
+                      city: "New York City",
+                      state: "NY",
+                      zip_code: "10001",
+                      email_address: "bert@example.com",
+                      password: "abc123",
+                      password_confirmation: "abc123",
+                      role: 2
+                     })
