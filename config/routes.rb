@@ -69,7 +69,7 @@ Rails.application.routes.draw do
     get '/users', to: 'users#user_names'
     get '/merchants/:merchant_id', to: 'merchant#show'
     get '/merchants', to: 'merchant#index'
-    patch '/merchant/disable', to: 'merchant#disable'
-    patch '/merchant/enable', to: 'merchant#enable'
+    patch '/merchant/:merchant_id/disable', to: 'merchant#disable'
+    patch '/merchant/:merchant_id/enable', to: 'merchant#enable'
   end
 end
