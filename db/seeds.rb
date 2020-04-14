@@ -39,12 +39,25 @@ regina = User.create({name: "Regina",
                        city: "Storybrooke",
                        state: "ME",
                        zip_code: "00435",
-                       email_address: "merchant@example.com",
+                       email_address: "merchant1@example.com",
                        password: "password_merchant",
                        password_confirmation: "password_merchant",
                        role: 1,
                        merchant_id: bike_shop.id
                       })
+
+regina = User.create({name: "Elmo",
+                       street_address: "123 Sesame St",
+                       city: "New York City",
+                       state: "NY",
+                       zip_code: "10001",
+                       email_address: "merchant2@example.com",
+                       password: "password_merchant",
+                       password_confirmation: "password_merchant",
+                       role: 1,
+                       merchant_id: dog_shop.id
+                      })
+
 bert = User.create({name: "Bert",
                       street_address: "123 Sesame St.",
                       city: "New York City",
