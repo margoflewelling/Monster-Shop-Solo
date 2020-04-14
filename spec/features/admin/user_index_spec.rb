@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe 'As an admin user I can visit the merchant index page' do
-  it "I can see all merchants in the system with name, city, state, and enable/disable button" do
+RSpec.describe 'As an admin user I can visit the user index page' do
+  it "I can see all users in the system with name, date they registered, and type of user" do
     @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
     @brian = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 80203, active?:false)
 
