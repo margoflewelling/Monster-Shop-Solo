@@ -28,8 +28,9 @@ Rails.application.routes.draw do
   patch "/cart/:item_id/decrement", to: "cart#decrement"
 
   get "/orders/new", to: "orders#new"
-  post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
+  patch "/orders/:id", to: "orders#update"
+  post "/orders", to: "orders#create"
   delete "/orders/:id", to: "orders#destroy"
 
   get '/register', to: "users#new"
