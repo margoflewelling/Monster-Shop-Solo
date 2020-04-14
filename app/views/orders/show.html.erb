@@ -3,7 +3,7 @@
   </section>
 
 <section class = "cancel">
-  <%if @order.status != "Cancelled"%>
+  <%if @order.status == "Packaged" || @order.status == "Pending"%>
     <h4 align = "left"> <%=link_to "Cancel Order", "/orders/#{@order.id}", method: :delete %>
   <% end %>
 <section class = "shipping-address">

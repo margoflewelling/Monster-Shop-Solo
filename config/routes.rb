@@ -28,8 +28,9 @@ Rails.application.routes.draw do
   patch "/cart/:item_id/decrement", to: "cart#decrement"
 
   get "/orders/new", to: "orders#new"
-  post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
+  patch "/orders/:id", to: "orders#update"
+  post "/orders", to: "orders#create"
   delete "/orders/:id", to: "orders#destroy"
 
   get '/register', to: "users#new"
@@ -66,6 +67,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/', to: 'dashboard#index'
     get '/users', to: 'users#user_names'
+    get '/users/:user_id', to: 'users#show'
     get '/merchants/:merchant_id', to: 'merchant#show'
     get '/merchants', to: 'merchant#index'
     patch '/merchant/:merchant_id/disable', to: 'merchant#disable'

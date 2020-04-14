@@ -48,7 +48,7 @@ RSpec.describe 'As a merchant employee' do
       expect(page).to have_content(@order_1.zip)
 
       expect(page).to have_link(@tire.name)
-      expect(page).to have_content(@tire.image)
+      expect(page).to have_css("img[src*='#{@tire.image}']")
       expect(page).to have_content("Price: #{@tire.price}")
       expect(page).to have_content("Quantity: #{@item_order_1.quantity}")
 

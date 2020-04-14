@@ -1,0 +1,16 @@
+<h1>All Users</h1>
+
+<table>
+  <tr>
+    <th>User Name</th>
+    <th>Created At</th>
+    <th>Role</th>
+  </tr>
+  <% @users.each do |user| %>
+    <tr id='user-<%= user.id%>'>
+      <td><p><%= link_to user.name, "/admin/users/#{user.id}" %></p></td>
+      <td><p><%= user.created_at %></p></td>
+      <td><p><%= user.role %></p><td>
+    </tr>
+  <% end %>
+</table>
