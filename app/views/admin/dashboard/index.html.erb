@@ -6,6 +6,7 @@
     <th>Order Id</th>
     <th>Created At</th>
     <th>Status</th>
+    <th>Ship Order</th>
   </tr>
   <% @orders.each do |order| %>
     <tr id='order-<%= order.id%>'>
@@ -13,6 +14,11 @@
       <td><p><%= order.id %></p></td>
       <td><p><%= order.created_at %></p></td>
       <td><p><%= order.status %></p><td>
+      <% if order.status == "Packaged" %>
+        <td><p><%= button_to "Ship", "/orders/#{order.id}", method: :patch %></p><td>
+      <% else %>
+        <td><p>"Cannot Ship Order"</p></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
