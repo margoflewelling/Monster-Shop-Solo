@@ -90,7 +90,6 @@ RSpec.describe 'As an admin employee' do
 
       within("#order-#{@order_1.id}") do
         expect(page).to_not have_button('Ship')
-        expect(page).to have_content('Cannot Ship Order')
       end
 
       click_link 'Log out'
