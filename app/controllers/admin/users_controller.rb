@@ -1,5 +1,6 @@
 class Admin::UsersController < Admin::BaseController
   def user_names
+    @users = User.all
   end
 
   def show
