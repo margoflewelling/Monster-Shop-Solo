@@ -84,5 +84,24 @@ RSpec.describe 'As a merchant employee' do
       expect(@chain.inventory).to eq(5)
     end
 
+    it "can change order status to packaged if all items are fulfilled" do
+      order_2 = Order.create({name: "Fred", address: "22 dog st", city: "Fort Collins",
+                               state: "CO", zip: "80375", status: "Pending", user_id: @regina.id})
+      item_order_1 =  order_2.item_orders.create!({ item: @tire, quantity: 3, price: @tire.price })
+      item_order_2 =  order_2.item_orders.create!({ item: @chain, quantity: 1, price: @chain.price })
+
+      expect(order_2.status).to eq("Pending")
+      visit '/merchant'
+      click_link "Order ##{order_2.id}"
+      within "##{@tire.name}" do
+        click_on("Fulfill")
+      end
+      within "##{@chain.name}" do
+        click_on("Fulfill")
+      end
+      order_2.reload
+      expect(order_2.status).to eq("Packaged")
     end
+
   end
+end

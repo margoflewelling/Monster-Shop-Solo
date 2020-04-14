@@ -56,6 +56,11 @@ class Merchant::ItemsController < Merchant::BaseController
     item.inventory -= item_order.quantity
     item.save
     flash[:notice] = "You have fulfilled #{item.name}"
+    order = Order.find(params[:order_id])
+    if order.item_orders.where(fulfilled?: false) == []
+      order.status = "Packaged"
+      order.save
+    end
     redirect_to "/merchant/orders/#{params[:order_id]}"
   end
 
