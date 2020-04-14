@@ -47,7 +47,11 @@ RSpec.describe 'As an admin employee' do
         expect(page).to have_content(@order_1.id)
         expect(page).to have_content(@order_1.created_at)
         expect(page).to have_content(@order_1.status)
+        click_link(@order_1.user.name)
       end
+
+      expect(current_path).to eq("/admin/users/#{@user.id}")
+      visit '/admin'
 
       within("#order-#{@order_2.id}") do
         expect(page).to have_link(@order_2.user.name)
