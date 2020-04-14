@@ -79,5 +79,35 @@ RSpec.describe 'As an admin employee' do
       expect("Shipped").to appear_before("Cancelled")
       expect("Cancelled").to_not appear_before("Packaged")
     end
+
+    it 'Can ship orders packaged and ready to ship. Order status changes to shipped and user can no longer cancel order' do
+      within("#order-#{@order_2.id}") do
+        expect(page).to have_button('Ship')
+        click_button('Ship')
+        @order_2.reload
+        expect(@order_2.status).to eq('Shipped')
+      end
+
+      within("#order-#{@order_1.id}") do
+        expect(page).to_not have_button('Ship')
+        expect(page).to have_content('Cannot Ship Order')
+      end
+
+      click_link 'Log out'
+      click_link 'Log in'
+      fill_in :email_address, with: @user.email_address
+      fill_in :password, with: @user.password
+      click_button 'Log in'
+
+      @order_2.reload
+      click_link 'My Orders'
+      click_link "Order ##{@order_2.id}"
+      expect(page).to_not have_link("Cancel Order")
+
+      click_link 'Profile'
+      click_link 'My Orders'
+      click_link "Order ##{@order_1.id}"
+      expect(page).to have_link("Cancel Order")
+    end
   end
 end
