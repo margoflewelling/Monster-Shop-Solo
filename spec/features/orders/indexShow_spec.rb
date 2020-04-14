@@ -86,14 +86,15 @@ RSpec.describe("Orders index and show pages") do
       expect(page).to have_link("Cancel Order")
       click_link("Cancel Order")
       @order_1.reload
-
-      # expect(@item_order_1.status).to eq("Unfulfilled")
-      # - Any item quantities in the order that were previously fulfilled have their quantities
-      # returned to their respective merchant's inventory for that item.
+      expect(@item_order_1.fulfilled?).to eq(false)
+      expect(@tire.inventory).to eq(12)
 
       expect(current_path).to eq("/user/profile")
       expect(page).to have_content("Order ##{@order_1.id} has been cancelled")
       expect(@order_1.status).to eq("Cancelled")
+
+      visit "/orders/#{@order_1.id}"
+      expect(page).to have_content("Unfulfilled")
     end
 
 end

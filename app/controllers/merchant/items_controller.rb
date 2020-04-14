@@ -49,6 +49,21 @@ class Merchant::ItemsController < Merchant::BaseController
     end
   end
 
+  def fulfill
+    item = Item.find(params[:item_id])
+    item_order = item.item_orders.where("item_orders.order_id =?", params[:order_id]).first
+    item_order.update(fulfilled?: true)
+    item.inventory -= item_order.quantity
+    item.save
+    flash[:notice] = "You have fulfilled #{item.name}"
+    order = Order.find(params[:order_id])
+    if order.item_orders.where(fulfilled?: false) == []
+      order.status = "Packaged"
+      order.save
+    end
+    redirect_to "/merchant/orders/#{params[:order_id]}"
+  end
+
   def destroy
     item = Item.find(params[:item_id])
     flash[:notice] = "#{item.name} has been deleted"
