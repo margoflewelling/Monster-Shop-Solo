@@ -14,11 +14,17 @@
       <td><p><%= order.id %></p></td>
       <td><p><%= order.created_at %></p></td>
       <td><p><%= order.status %></p><td>
-      <td>
+
         <% if order.status == "Packaged" %>
           <p><%= button_to "Ship", "/orders/#{order.id}", method: :patch %></p>
+        <% elsif order.status == "Shipped" %>
+          <p>Shipped!</p>
+        <% elsif order.status == "Pending" %>
+          <p>Waiting on Merchant to Fulfill</p>
+        <% else %>
+          <p> Order Cannot Be Shipped</p>
         <% end %>
-      </td>
+
     </tr>
   <% end %>
 </table>
