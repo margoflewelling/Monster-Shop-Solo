@@ -1,1 +1,18 @@
 <h1><%="Logged in as #{current_user.name}"%></h1>
+
+<table>
+  <tr>
+    <th>User Name</th>
+    <th>Order Id</th>
+    <th>Created At</th>
+    <th>Status</th>
+  </tr>
+  <% @orders.each do |order| %>
+    <tr id='order-<%= order.id%>'>
+      <td><p><%= link_to order.user.name, "/admin/users/#{order.id}" %></p></td>
+      <td><p><%= order.id %></p></td>
+      <td><p><%= order.created_at %></p></td>
+      <td><p><%= order.status %></p><td>
+    </tr>
+  <% end %>
+</table>
