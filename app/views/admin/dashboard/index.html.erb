@@ -9,7 +9,7 @@
   </tr>
   <% @orders.each do |order| %>
     <tr id='order-<%= order.id%>'>
-      <td><p><%= link_to order.user.name, "/admin/users/#{order.id}" %></p></td>
+      <td><p><%= link_to order.user.name, "/admin/users/#{order.user.id}" %></p></td>
       <td><p><%= order.id %></p></td>
       <td><p><%= order.created_at %></p></td>
       <td><p><%= order.status %></p><td>
