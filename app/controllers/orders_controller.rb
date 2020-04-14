@@ -1,7 +1,6 @@
 class OrdersController <ApplicationController
 
   def new
-
   end
 
   def show
@@ -29,6 +28,11 @@ class OrdersController <ApplicationController
     end
   end
 
+  def update
+    order = Order.find(params[:id])
+    order.update(status: "Shipped")
+    redirect_to "/admin"
+  end
 
   def destroy
     order = Order.find(params[:id])
@@ -36,7 +40,6 @@ class OrdersController <ApplicationController
     order.update(status: "Cancelled")
     redirect_to "/user/profile"
   end
-
 
   private
 
