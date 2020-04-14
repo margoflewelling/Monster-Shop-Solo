@@ -59,7 +59,7 @@ bert = User.create({name: "Bert",
 #orders
 order_1 = Order.create(name: 'Regina', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: "Pending", user_id: regina.id)
 order_2 = Order.create(name: 'Bob', address: '123 Zanti St', city: 'Denver', state: 'CO', zip: 80204, status: "Pending", user_id: bob.id)
-order_3 = Order.create(name: 'Bob', address: '123 Zanti St', city: 'Denver', state: 'CO', zip: 80204, status: "cancelled", user_id: bob.id)
+order_3 = Order.create(name: 'Bob', address: '123 Zanti St', city: 'Denver', state: 'CO', zip: 80204, status: "Cancelled", user_id: bob.id)
 
 order_1.item_orders.create(item: tire, price: tire.price, quantity: 2)
 order_1.item_orders.create(item: pull_toy, price: pull_toy.price, quantity: 3)
