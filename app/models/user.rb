@@ -7,7 +7,19 @@ class User < ApplicationRecord
                         :city,
                         :state,
                         :zip_code,
-                        :email_address,
-                        :password,
-                        :confirm_password
+                        :email_address
+
+  has_many :orders
+  belongs_to :merchant, optional: true
+
+  enum role: {user: 0, merchant: 1, admin: 2}
+
+  has_secure_password
+
+
+
+  def has_orders?
+    !orders.nil?
+  end
+
 end

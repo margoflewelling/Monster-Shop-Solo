@@ -10,7 +10,7 @@ class Item <ApplicationRecord
                         :image,
                         :inventory
   validates_inclusion_of :active?, :in => [true, false]
-  validates_numericality_of :price, greater_than: 0
+  validates_numericality_of :inventory, :price, greater_than: 0
 
 
   def average_review
@@ -25,4 +25,13 @@ class Item <ApplicationRecord
     item_orders.empty?
   end
 
+  def self.most_popular_items
+    most_popular_item_orders = ItemOrder.find_by_sql("SELECT item_id, sum(quantity) as sum FROM item_orders GROUP BY item_id ORDER BY sum DESC LIMIT 5")
+    most_popular_item_orders.map {|item| Item.find(item.item_id).name }
+  end
+
+  def self.least_popular_items
+    least_popular_item_orders = ItemOrder.find_by_sql("SELECT items.id, sum(CASE WHEN item_orders.quantity IS NULL THEN 0 ELSE item_orders.quantity END) as total_quantity FROM items FULL OUTER JOIN item_orders ON items.id = item_orders.item_id GROUP BY items.id ORDER BY total_quantity ASC LIMIT 5;")
+    least_popular_item_orders.map {|item| Item.find(item.id).name }
+  end
 end

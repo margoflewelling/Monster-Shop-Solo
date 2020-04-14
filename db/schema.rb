@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200407013956) do
+ActiveRecord::Schema.define(version: 20200413231430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20200407013956) do
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "fulfilled?", default: false
     t.index ["item_id"], name: "index_item_orders_on_item_id"
     t.index ["order_id"], name: "index_item_orders_on_order_id"
   end
@@ -30,7 +31,7 @@ ActiveRecord::Schema.define(version: 20200407013956) do
     t.string "name"
     t.string "description"
     t.integer "price"
-    t.string "image"
+    t.string "image", default: "https://www.intemposoftware.com/uploads/blog/Blog_inventory_control.jpg"
     t.boolean "active?", default: true
     t.integer "inventory"
     t.bigint "merchant_id"
@@ -47,6 +48,7 @@ ActiveRecord::Schema.define(version: 20200407013956) do
     t.integer "zip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active?", default: true
   end
 
   create_table "orders", force: :cascade do |t|
@@ -57,6 +59,9 @@ ActiveRecord::Schema.define(version: 20200407013956) do
     t.integer "zip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -74,14 +79,18 @@ ActiveRecord::Schema.define(version: 20200407013956) do
     t.string "state"
     t.string "zip_code"
     t.string "email_address"
-    t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "confirm_password"
+    t.string "password_digest"
+    t.integer "role", default: 0
+    t.bigint "merchant_id"
+    t.index ["merchant_id"], name: "index_users_on_merchant_id"
   end
 
   add_foreign_key "item_orders", "items"
   add_foreign_key "item_orders", "orders"
   add_foreign_key "items", "merchants"
+  add_foreign_key "orders", "users"
   add_foreign_key "reviews", "items"
+  add_foreign_key "users", "merchants"
 end

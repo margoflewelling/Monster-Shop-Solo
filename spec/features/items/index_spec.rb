@@ -19,11 +19,27 @@ RSpec.describe "Items Index Page" do
       expect(page).to have_link(@tire.merchant.name)
       expect(page).to have_link(@pull_toy.name)
       expect(page).to have_link(@pull_toy.merchant.name)
-      expect(page).to have_link(@dog_bone.name)
-      expect(page).to have_link(@dog_bone.merchant.name)
     end
 
-    it "I can see a list of all of the items "do
+    # it "all images are links to their show page" do
+    #   visit '/items'
+    #
+    #   expect(page).to have_link(@tire.image)
+    #   expect(page).to have_link(@pull_toy.image)
+    #   # binding.pry
+    #   my_link = find(:xpath, "//a[contains(@href,'/items/#{@tire.id}')]")
+    #
+    #   find("img[src*='#{@tire.image}']").click
+    #
+    #
+    #   within "#item-#{@tire.id}" do
+    #    my_link.click
+    #   end
+    #
+    #   expect(current_path).to eq("/items/#{@tire.id}")
+    # end
+
+    it "I can see a list of all of the items except disabled items" do
 
       visit '/items'
 
@@ -31,7 +47,6 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_link(@tire.name)
         expect(page).to have_content(@tire.description)
         expect(page).to have_content("Price: $#{@tire.price}")
-        expect(page).to have_content("Active")
         expect(page).to have_content("Inventory: #{@tire.inventory}")
         expect(page).to have_link(@meg.name)
         expect(page).to have_css("img[src*='#{@tire.image}']")
@@ -41,21 +56,17 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_link(@pull_toy.name)
         expect(page).to have_content(@pull_toy.description)
         expect(page).to have_content("Price: $#{@pull_toy.price}")
-        expect(page).to have_content("Active")
         expect(page).to have_content("Inventory: #{@pull_toy.inventory}")
         expect(page).to have_link(@brian.name)
         expect(page).to have_css("img[src*='#{@pull_toy.image}']")
       end
 
-      within "#item-#{@dog_bone.id}" do
-        expect(page).to have_link(@dog_bone.name)
-        expect(page).to have_content(@dog_bone.description)
-        expect(page).to have_content("Price: $#{@dog_bone.price}")
-        expect(page).to have_content("Inactive")
-        expect(page).to have_content("Inventory: #{@dog_bone.inventory}")
-        expect(page).to have_link(@brian.name)
-        expect(page).to have_css("img[src*='#{@dog_bone.image}']")
-      end
+      expect(page).to have_no_link(@dog_bone.name)
+      expect(page).to have_no_content(@dog_bone.description)
+      expect(page).to have_no_content("Price: $#{@dog_bone.price}")
+      expect(page).to have_no_content("Inactive")
+      expect(page).to have_no_content("Inventory: #{@dog_bone.inventory}")
+      expect(page).to have_no_css("img[src*='#{@dog_bone.image}']")
     end
   end
 end

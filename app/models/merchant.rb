@@ -1,6 +1,7 @@
 class Merchant <ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :item_orders, through: :items
+  has_many :users
 
   validates_presence_of :name,
                         :address,
@@ -8,6 +9,7 @@ class Merchant <ApplicationRecord
                         :state,
                         :zip
 
+  validates_inclusion_of :active?, :in => [true, false]
 
   def no_orders?
     item_orders.empty?
@@ -23,6 +25,22 @@ class Merchant <ApplicationRecord
 
   def distinct_cities
     item_orders.distinct.joins(:order).pluck(:city)
+  end
+
+  def pending_orders
+    Order.joins(:items).where(items: {merchant_id: self.id}).where(orders: {status: "Pending"}).distinct
+  end
+
+  def deactivate_items
+    if !active?
+      items.each { |item| item.update(active?: false) }
+    end
+  end
+
+  def activate_items
+    if active?
+      items.each { |item| item.update(active?: true) }
+    end
   end
 
 end

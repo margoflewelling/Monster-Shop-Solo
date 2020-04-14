@@ -6,29 +6,31 @@ class UsersController < ApplicationController
 
   def create
     @user = User.create(user_params)
-    if @user.save && user_params[:password] == user_params[:confirm_password]
+    if @user.save
       flash[:notice] = "Welcome #{@user.name}! You are now registered and logged in!"
-      redirect_to '/profile'
-    elsif user_params[:password] != user_params[:confirm_password]
-      flash[:notice] = "Your password fields do not match. #{@user.errors.full_messages.to_sentence}"
-      render(:new)
+      session[:user_id] = @user.id
+      redirect_to '/user/profile'
     else
       flash[:notice] = @user.errors.full_messages.to_sentence
       render(:new)
     end
   end
 
-  def login
-  end
-
-  def profile
+  #should be destory action of sessions controller and should only have one
+  #sessions controller
+  def logout
+    flash[:notice] = "Bye #{current_user.name}! You are now logged out."
+    session.delete(:cart)
+    session.delete(:user_id)
+    @current_user = nil
+    redirect_to '/'
   end
 
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :street_address, :city, :state, :zip_code, :email_address, :password, :confirm_password)
+    params.require(:user).permit(:name, :street_address, :city, :state, :zip_code, :email_address, :password, :password_confirmation)
   end
 
 end

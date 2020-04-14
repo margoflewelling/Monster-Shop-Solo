@@ -2,15 +2,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'welcome#index'
 
-  get "/login", to: "users#login"
-
-  get "/merchants", to: "merchants#index"
-  get "/merchants/new", to: "merchants#new"
-  get "/merchants/:id", to: "merchants#show"
-  post "/merchants", to: "merchants#create"
-  get "/merchants/:id/edit", to: "merchants#edit"
-  patch "/merchants/:id", to: "merchants#update"
-  delete "/merchants/:id", to: "merchants#destroy"
+  resources :merchants
 
   get "/items", to: "items#index"
   get "/items/:id", to: "items#show"
@@ -32,13 +24,51 @@ Rails.application.routes.draw do
   get "/cart", to: "cart#show"
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
+  patch "/cart/:item_id/increment", to: "cart#increment"
+  patch "/cart/:item_id/decrement", to: "cart#decrement"
 
   get "/orders/new", to: "orders#new"
   post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
+  delete "/orders/:id", to: "orders#destroy"
 
   get '/register', to: "users#new"
   post '/register', to: "users#create"
 
-  get '/profile', to: "users#profile"
+  namespace :user do
+    get '/profile', to: "users#profile"
+    get '/profile/edit', to: 'users#edit'
+    patch '/profile', to: 'users#update'
+    post '/profile', to: 'sessions#create'
+    get "/profile/orders", to: "users#orders"
+  end
+
+  resource :password, only: [:edit, :update]
+
+  namespace :merchant do
+    get '/', to: "dashboard#index"
+    get '/orders/:id', to: "dashboard#show"
+    get '/items', to: "items#index"
+    get '/items/new', to: "items#new"
+    get '/items/:item_id/edit', to: "items#edit"
+    post '/items', to: "items#create"
+
+    patch '/items/:item_id/status', to: "items#status"
+    patch '/items/:order_id/:item_id/fulfillment', to: "items#fulfill"
+    patch '/items/:item_id', to: "items#update"
+
+    delete '/items/:item_id', to: "items#destroy"
+  end
+
+  get '/login', to: 'sessions#new'
+  get '/logout', to: 'users#logout'
+
+  namespace :admin do
+    get '/', to: 'dashboard#index'
+    get '/users', to: 'users#user_names'
+    get '/merchants/:merchant_id', to: 'merchant#show'
+    get '/merchants', to: 'merchant#index'
+    patch '/merchant/:merchant_id/disable', to: 'merchant#disable'
+    patch '/merchant/:merchant_id/enable', to: 'merchant#enable'
+  end
 end

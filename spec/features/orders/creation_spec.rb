@@ -1,19 +1,31 @@
-# When I fill out all information on the new order page
-# And click on 'Create Order'
-# An order is created and saved in the database
-# And I am redirected to that order's show page with the following information:
-#
-# - Details of the order:
+require 'rails_helper'
 
-# - the date when the order was created
 RSpec.describe("Order Creation") do
   describe "When I check out from my cart" do
     before(:each) do
+      @user = User.create({name: "Regina",
+                          street_address: "6667 Evil Ln",
+                          city: "Storybrooke",
+                          state: "ME",
+                          zip_code: "00435",
+                          email_address: "evilqueen@example.com",
+                          password: "henry2004",
+                          password_confirmation: "henry2004",
+                          role: 0
+                         })
       @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
       @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
+
+      visit '/'
+
+      click_link 'Log in'
+
+      fill_in :email_address, with: 'evilqueen@example.com'
+      fill_in :password, with: 'henry2004'
+      click_button 'Log in'
 
       visit "/items/#{@paper.id}"
       click_on "Add To Cart"
@@ -29,30 +41,25 @@ RSpec.describe("Order Creation") do
     end
 
     it 'I can create a new order' do
-      name = "Bert"
-      address = "123 Sesame St."
-      city = "NYC"
-      state = "New York"
-      zip = 10001
-
-      fill_in :name, with: name
-      fill_in :address, with: address
-      fill_in :city, with: city
-      fill_in :state, with: state
-      fill_in :zip, with: zip
+      fill_in :name, with: @user.name
+      fill_in :address, with: @user.street_address
+      fill_in :city, with: @user.city
+      fill_in :state, with: @user.state
+      fill_in :zip, with: @user.zip_code
 
       click_button "Create Order"
 
       new_order = Order.last
 
-      expect(current_path).to eq("/orders/#{new_order.id}")
+      expect(current_path).to eq("/user/profile/orders")
+      click_on "Order ##{new_order.id}"
 
       within '.shipping-address' do
-        expect(page).to have_content(name)
-        expect(page).to have_content(address)
-        expect(page).to have_content(city)
-        expect(page).to have_content(state)
-        expect(page).to have_content(zip)
+        expect(page).to have_content(new_order.name)
+        expect(page).to have_content(new_order.address)
+        expect(page).to have_content(new_order.city)
+        expect(page).to have_content(new_order.state)
+        expect(page).to have_content(new_order.zip)
       end
 
       within "#item-#{@paper.id}" do
@@ -110,3 +117,12 @@ RSpec.describe("Order Creation") do
 
   end
 end
+
+# When I fill out all information on the new order page
+# And click on 'Create Order'
+# An order is created and saved in the database
+# And I am redirected to that order's show page with the following information:
+#
+# - Details of the order:
+
+# - the date when the order was created
