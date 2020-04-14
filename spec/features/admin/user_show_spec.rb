@@ -59,8 +59,6 @@ RSpec.describe 'As an admin user I can visit a users show page' do
 
     expect(current_path).to eq("/admin/users/#{@bob.id}")
 
-    save_and_open_page
-
     expect(page).to have_content(@bob.name)
     expect(page).to have_content(@bob.street_address)
     expect(page).to have_content(@bob.city)
