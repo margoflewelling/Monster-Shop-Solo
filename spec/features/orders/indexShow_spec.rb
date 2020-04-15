@@ -51,7 +51,7 @@ RSpec.describe("Orders index and show pages") do
       within("##{@order_1.id}") do
         click_link("#{@order_1.id}")
       end
-      expect(current_path).to eq("/orders/#{@order_1.id}")
+      expect(current_path).to eq("/profile/orders/#{@order_1.id}")
 
       within("#orderid") do
         expect(page).to have_content(@order_1.id)
@@ -83,7 +83,7 @@ RSpec.describe("Orders index and show pages") do
     end
 
     it "can cancel an order" do
-      visit "/orders/#{@order_1.id}"
+      visit "/profile/orders/#{@order_1.id}"
       expect(page).to have_link("Cancel Order")
       click_link("Cancel Order")
       @order_1.reload
@@ -94,7 +94,7 @@ RSpec.describe("Orders index and show pages") do
       expect(page).to have_content("Order ##{@order_1.id} has been cancelled")
       expect(@order_1.status).to eq("Cancelled")
 
-      visit "/orders/#{@order_1.id}"
+      visit "/profile/orders/#{@order_1.id}"
       expect(page).to have_content("Unfulfilled")
     end
 
