@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'welcome#index'
 
-  resources :merchants
+  resources :merchants, except: [:edit, :update, :delete]
 
   get "/items", to: "items#index"
   get "/items/:id", to: "items#show"
@@ -47,6 +47,10 @@ Rails.application.routes.draw do
   resource :password, only: [:edit, :update]
 
   namespace :merchant do
+    get '/merchants/:id/edit', to: 'merchants#edit'
+    patch '/merchants/:id', to: 'merchants#update'
+    delete '/merchants/:id', to: 'merchants#destroy'
+
     get '/', to: "dashboard#index"
     get '/orders/:id', to: "dashboard#show"
     get '/:merchant_id/items', to: "items#index"
