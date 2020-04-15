@@ -1,7 +1,7 @@
 class Merchant::ItemsController < Merchant::BaseController
 
   def index
-    @merchant = Merchant.find(current_user.merchant_id)
+    @merchant = Merchant.find(params[:merchant_id])
     @items = @merchant.items
   end
 
