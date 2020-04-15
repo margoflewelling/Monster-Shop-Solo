@@ -34,7 +34,7 @@ RSpec.describe "As a Merchant Employee" do
         expect(current_path).to eq("/items/#{@tire.id}/edit")
         expect(page).to have_link("Gatorskins")
         expect(find_field("item[name]").value).to eq "Gatorskins"
-        expect(find_field('item[price]').value).to eq '$100.00'
+        expect(find_field('item[price]').value).to eq "100"
         expect(find_field('item[description]').value).to eq "They'll never pop!"
         expect(find_field('item[image]').value).to eq("https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588")
         expect(find_field('item[inventory]').value).to eq '12'
@@ -112,14 +112,14 @@ RSpec.describe "As a Merchant Employee" do
         click_on "Edit Item"
 
         fill_in 'item[name]', with: ""
-        fill_in 'item[price]', with: 110
+        fill_in 'item[price]', with: "110"
         fill_in 'item[description]', with: "They're a bit more expensive, and they kinda do pop sometimes, but whatevs.. this is retail."
         fill_in 'item[image]', with: ""
         fill_in 'item[inventory]', with: 11
 
         click_button "Update Item"
 
-        expect(page).to have_content("Name can't be blank and Image can't be blank")
+        expect(page).to have_content("Name can't be blank")
         expect(page).to have_button("Update Item")
       end
     end

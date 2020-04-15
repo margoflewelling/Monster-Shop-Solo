@@ -83,7 +83,7 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
       click_button "Update Item"
 
       expect(page).to have_content("Name can't be blank, Description can't be blank, Inventory can't be blank, Inventory is not a number, and Price must be greater than or equal to 0")
-      expect(page).to have_selector("input[value='-$20.00']")
+      expect(page).to have_selector("input[value='-20']")
       expect(page).to have_button("Update Item")
     end
   end
