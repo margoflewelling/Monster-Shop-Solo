@@ -1,7 +1,7 @@
 class Merchant::ItemsController < Merchant::BaseController
 
   def index
-    @merchant = Merchant.find(current_user.merchant_id)
+    @merchant = Merchant.find(params[:merchant_id])
     @items = @merchant.items
   end
 
@@ -15,7 +15,7 @@ class Merchant::ItemsController < Merchant::BaseController
     @item = @merchant.items.create(item_params)
     if @item.save
       flash[:notice] = "Your item '#{@item.name}' has been saved"
-      redirect_to "/merchant/items"
+      redirect_to "/merchant/#{@merchant.id}/items"
     else
       flash[:error] = @item.errors.full_messages.to_sentence
       render(:new)
@@ -35,14 +35,14 @@ class Merchant::ItemsController < Merchant::BaseController
       @item.update(active?: true)
       flash[:notice] = "#{@item.name} is now available for sale"
     end
-    redirect_to "/merchant/items"
+    redirect_to "/merchant/#{@item.merchant.id}/items"
   end
 
   def update
     @item = Item.find(params[:item_id])
     if @item.update(item_params) && @item.save
-      flash[:notice] = "Your item '#{@item.name}' has been updated"
-      redirect_to "/merchant/items"
+      flash[:success] = "Your item '#{@item.name}' has been updated"
+      redirect_to "/merchant/#{@item.merchant.id}/items"
     else
       flash[:error] = @item.errors.full_messages.to_sentence
       render :edit
@@ -55,7 +55,7 @@ class Merchant::ItemsController < Merchant::BaseController
     item_order.update(fulfilled?: true)
     item.inventory -= item_order.quantity
     item.save
-    flash[:notice] = "You have fulfilled #{item.name}"
+    flash[:success] = "You have fulfilled #{item.name}"
     order = Order.find(params[:order_id])
     if order.item_orders.where(fulfilled?: false) == []
       order.status = "Packaged"
@@ -68,7 +68,7 @@ class Merchant::ItemsController < Merchant::BaseController
     item = Item.find(params[:item_id])
     flash[:notice] = "#{item.name} has been deleted"
     item.destroy
-    redirect_to "/merchant/items"
+    redirect_to "/merchant/#{item.merchant.id}/items"
   end
 
   private
