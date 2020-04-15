@@ -29,7 +29,7 @@ class CartController < ApplicationController
         if quantity < item.inventory
           cart.contents[item_id] += 1
         else
-          flash[:inventory_notice] = "Do not have enough of this item in stock, please choose another."
+          flash[:inventory_notice] = "There's not enough of this item in stock, please choose another."
         end
       end
     end
