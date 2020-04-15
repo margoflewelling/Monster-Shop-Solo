@@ -41,7 +41,7 @@ class Merchant::ItemsController < Merchant::BaseController
   def update
     @item = Item.find(params[:item_id])
     if @item.update(item_params) && @item.save
-      flash[:notice] = "Your item '#{@item.name}' has been updated"
+      flash[:success] = "Your item '#{@item.name}' has been updated"
       redirect_to "/merchant/items"
     else
       flash[:error] = @item.errors.full_messages.to_sentence
@@ -55,7 +55,7 @@ class Merchant::ItemsController < Merchant::BaseController
     item_order.update(fulfilled?: true)
     item.inventory -= item_order.quantity
     item.save
-    flash[:notice] = "You have fulfilled #{item.name}"
+    flash[:success] = "You have fulfilled #{item.name}"
     order = Order.find(params[:order_id])
     if order.item_orders.where(fulfilled?: false) == []
       order.status = "Packaged"
