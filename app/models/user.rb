@@ -19,7 +19,7 @@ class User < ApplicationRecord
 
 
   def has_orders?
-    !orders.nil?
+    orders != []
   end
 
 end
