@@ -71,6 +71,14 @@ RSpec.describe "Create Merchant Items" do
     end
 
     it 'I get an alert if I dont fully fill out the form' do
+      visit '/'
+
+      click_link 'Log in'
+
+      fill_in :email_address, with: 'evilqueen@example.com'
+      fill_in :password, with: 'henry2004'
+      click_button 'Log in'
+
       visit "/merchants/#{@brian.id}/items"
 
       name = ""
