@@ -7,7 +7,7 @@
     <%= f.text_field :description, id:"description" %>
 
     <%= f.label :price %>
-    <%= f.text_field :price, value: params[:item].nil? ? number_to_currency(f.object.price) : number_to_currency(params[:item][:price]), id:"price" %>
+    <%= f.text_field :price, id:"price" %>
 
     <%= f.label :image %>
     <%= f.text_field :image, id:"image" %>
