@@ -31,7 +31,7 @@ RSpec.describe "As a Merchant Employee" do
 
         click_on "Edit Item"
 
-        expect(current_path).to eq("/items/#{@tire.id}/edit")
+        expect(current_path).to eq("/merchant/items/#{@tire.id}/edit")
         expect(page).to have_link("Gatorskins")
         expect(find_field("item[name]").value).to eq "Gatorskins"
         expect(find_field('item[price]').value).to eq "100"
@@ -74,7 +74,7 @@ RSpec.describe "As a Merchant Employee" do
 
         click_button "Update Item"
 
-        expect(current_path).to eq("/items/#{@tire.id}")
+        expect(current_path).to eq("/merchant/#{@meg.id}/items")
         expect(page).to have_content("GatorSkins")
         expect(page).to_not have_content("Gatorskins")
         expect(page).to have_content("Price: $110")

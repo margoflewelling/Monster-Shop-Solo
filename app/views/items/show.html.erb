@@ -14,6 +14,7 @@
       <p>Inventory: <%= @item.inventory %> </p>
       <% if @item.active? %>
         <p style= "color:green">Active</p>
+        <%= button_to "Add To Cart", "/cart/#{@item.id}", method: :post %>
       <% else %>
         <p style= "color:red">Inactive</p>
       <% end %>
@@ -22,7 +23,6 @@
         <p><%= link_to "Delete Item", "/merchant/items/#{@item.id}", method: :delete if @item.no_orders?%></p>
       <% end %>
       <%= link_to "Add Review", "/items/#{@item.id}/reviews/new" %>
-      <%= button_to "Add To Cart", "/cart/#{@item.id}", method: :post %>
     </section>
   </section>
 </center>
