@@ -69,7 +69,7 @@ RSpec.describe 'As a merchant employee' do
   it 'I see order information' do
     visit '/merchant'
     click_link 'View My Items'
-    expect(current_path).to eq("/merchant/items")
+    expect(current_path).to eq("/merchant/#{@meg.id}/items")
   end
 
 end

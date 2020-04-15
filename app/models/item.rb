@@ -10,7 +10,7 @@ class Item <ApplicationRecord
                         :image,
                         :inventory
   validates_inclusion_of :active?, :in => [true, false]
-  validates_numericality_of :inventory, :price, greater_than: 0
+  validates_numericality_of :inventory, :price, greater_than_or_equal_to: 0
 
 
   def average_review

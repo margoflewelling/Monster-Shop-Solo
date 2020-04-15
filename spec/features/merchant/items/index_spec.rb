@@ -45,16 +45,16 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
     it "can deactivate an item from their items page" do
       visit "/merchant"
       click_link 'View My Items'
-      expect(current_path).to eq("/merchant/items")
+      expect(current_path).to eq("/merchant/#{@meg.id}/items")
       within "#item-#{@tire.id}" do
         expect(page).to have_content(@tire.name)
         expect(page).to have_content("Price: $#{@tire.price}")
         expect(page).to have_css("img[src*='#{@tire.image}']")
         expect(page).to have_content("Active")
-        expect(page).to_not have_content(@tire.description)
+        expect(page).to have_content(@tire.description)
         expect(page).to have_content("Inventory: #{@tire.inventory}")
         click_link("Deactivate")
-        expect(current_path).to eq("/merchant/items")
+        expect(current_path).to eq("/merchant/#{@meg.id}/items")
         expect(page).to have_content("Inactive")
       end
 
@@ -64,16 +64,16 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
     it "can deactivate an item from their items page" do
       visit "/merchant"
       click_link 'View My Items'
-      expect(current_path).to eq("/merchant/items")
+      expect(current_path).to eq("/merchant/#{@meg.id}/items")
       within "#item-#{@shifter.id}" do
         expect(page).to have_content(@shifter.name)
         expect(page).to have_content("Price: $#{@shifter.price}")
         expect(page).to have_css("img[src*='#{@shifter.image}']")
         expect(page).to have_content("Inactive")
-        expect(page).to_not have_content(@shifter.description)
+        expect(page).to have_content(@shifter.description)
         expect(page).to have_content("Inventory: #{@shifter.inventory}")
         click_link("Activate")
-        expect(current_path).to eq("/merchant/items")
+        expect(current_path).to eq("/merchant/#{@meg.id}/items")
         expect(page).to have_content("Active")
       end
 
@@ -81,14 +81,14 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
     end
 
     it "can delete an item that has never been ordered" do
-      visit "/merchant/items"
+      visit "/merchant/#{@meg.id}/items"
       within "#item-#{@shifter.id}" do
         expect(page).to_not have_link("Delete")
       end
       within "#item-#{@chain.id}" do
         click_link("Delete")
       end
-      expect(current_path).to eq("/merchant/items")
+      expect(current_path).to eq("/merchant/#{@meg.id}/items")
       expect(page).to have_content("#{@chain.name} has been deleted")
       expect(page).to_not have_content(@chain.description)
     end

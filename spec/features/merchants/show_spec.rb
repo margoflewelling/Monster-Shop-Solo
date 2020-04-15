@@ -20,7 +20,7 @@ RSpec.describe 'merchant show page', type: :feature do
 
       click_on "All #{@bike_shop.name} Items"
 
-      expect(current_path).to eq("/merchants/#{@bike_shop.id}/items")
+      expect(current_path).to eq("/merchant/#{@bike_shop.id}/items")
     end
 
   end
