@@ -67,6 +67,7 @@ RSpec.describe("Orders index and show pages") do
 
       within("#item-#{@tire.id}") do
         expect(page).to have_content(@tire.name)
+        expect(page).to have_content(@tire.description)
         expect(page).to have_css("img[src='https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588']")
         expect(page).to have_content(@item_order_1.quantity)
         expect(page).to have_content(@tire.price)
