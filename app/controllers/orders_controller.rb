@@ -36,10 +36,20 @@ class OrdersController <ApplicationController
 
   def destroy
     order = Order.find(params[:id])
+    order.item_orders.each do |item_order|
+      item_order.item.inventory += item_order.quantity if item_order.fulfilled?
+      item_order.item.save
+      item_order.update(fulfilled?: false)
+    end
     flash[:notice] = "Order ##{order.id} has been cancelled"
     order.update(status: "Cancelled")
-    redirect_to "/user/profile"
+    if current_admin?
+      redirect_to "/admin"
+    else
+      redirect_to "/user/profile"
+    end
   end
+
 
   private
 

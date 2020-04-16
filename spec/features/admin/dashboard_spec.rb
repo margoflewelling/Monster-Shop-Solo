@@ -108,5 +108,16 @@ RSpec.describe 'As an admin employee' do
       click_link "Order ##{@order_1.id}"
       expect(page).to have_link("Cancel Order")
     end
+
+    it "can click on an order id on the dashboard and go to admin only view of that orders show page" do
+      visit "/admin"
+      expect(page).to have_link("#{@order_2.id}")
+      expect(page).to have_link("#{@order_1.id}")
+      expect(page).to have_link("#{@order_3.id}")
+      expect(page).to have_link("#{@order_4.id}")
+      click_on("#{@order_2.id}")
+      expect(current_path).to eq("/admin/users/#{@user.id}/orders/#{@order_2.id}")
+    end
+
   end
 end
