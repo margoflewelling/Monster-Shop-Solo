@@ -14,7 +14,7 @@
       <p>Inventory: <%= @item.inventory %> </p>
       <% if @item.active? %>
         <p style= "color:green">Active</p>
-        <%= button_to "Add To Cart", "/cart/#{@item.id}", method: :post %>
+        <%= button_to "Add To Cart", "/cart/#{@item.id}", method: :post if !current_admin? %>
       <% else %>
         <p style= "color:red">Inactive</p>
       <% end %>
