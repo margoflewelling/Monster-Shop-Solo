@@ -24,6 +24,7 @@ class Merchant <ApplicationRecord
   end
 
   def distinct_cities
+    # Merchant.find_by_sql("SELECT orders.city FROM orders INNER JOIN users ON users.id = orders.user_id WHERE 'active?' = true AND DISTINCT")
     item_orders.distinct.joins(:order).pluck(:city)
   end
 

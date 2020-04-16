@@ -66,7 +66,7 @@ RSpec.describe 'As an admin user I can visit a users show page' do
     expect(page).to have_content(@bob.zip_code)
     expect(page).to have_content(@bob.email_address)
     expect(page).to_not have_content(@bob.password)
-    expect(page).to_not have_link("Edit Profile Info")
+    expect(page).to have_link("Edit Profile Info")
     expect(page).to_not have_link("Edit Password")
   end
 end
