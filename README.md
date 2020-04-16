@@ -19,3 +19,11 @@ git clone git@github.com:StephanieFriend/monster_shop_2001.git
   
 3. On the CLI open your local host 
   - ```rails s```
+
+
+### Contributors
+<p>
+  <a href="https://github.com/danielbldr">Daniel Atkinson</a> | 
+  <a href="https://github.com/margoflewelling">Margo Flewelling</a> | 
+  <a href="https://github.com/StephanieFriend">Stephanie Friend</a>
+ </p>
