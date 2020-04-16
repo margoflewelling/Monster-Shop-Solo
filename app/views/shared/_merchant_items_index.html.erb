@@ -1,9 +1,9 @@
 <% if @merchant %>
   <h1><%= link_to @merchant.name, "/merchants/#{@merchant.id}"%><span> Items</span></h1>
 
-  <% if action_name == 'index' && controller_path == 'merchant/items' %>
+  <% if !current_user.nil? && current_user.merchant_id == @merchant.id %>
     <p align="center"><%= link_to "Add New Item", "/merchant/items/new" %></p>
-  <% else %>
+  <% elsif current_admin? %>
     <p align="center"><%= link_to "Add New Item", "/merchants/#{@merchant.id}/items/new" %></p>
   <% end %>
 

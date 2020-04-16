@@ -13,6 +13,7 @@ class Merchant::ItemsController < Merchant::BaseController
   def create
     @merchant = Merchant.find(current_user[:merchant_id])
     @item = @merchant.items.create(item_params)
+    @item.image = "https://www.intemposoftware.com/uploads/blog/Blog_inventory_control.jpg" if item_params[:image] == ""
     if @item.save
       flash[:notice] = "Your item '#{@item.name}' has been saved"
       redirect_to "/merchant/#{@merchant.id}/items"
@@ -41,6 +42,8 @@ class Merchant::ItemsController < Merchant::BaseController
   def update
     @item = Item.find(params[:item_id])
     if @item.update(item_params) && @item.save
+      @item.image = "https://www.intemposoftware.com/uploads/blog/Blog_inventory_control.jpg" if item_params[:image] == ""
+      @item.save
       flash[:success] = "Your item '#{@item.name}' has been updated"
       redirect_to "/merchant/#{@item.merchant.id}/items"
     else
