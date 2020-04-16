@@ -1,6 +1,6 @@
 # Monster Shop
 <p>
-  <a href="https://adopt-dont-shop-paired-tt-sf.herokuapp.com">App Hosted on Heroku</a>
+  <a href="https://agile-dawn-63531.herokuapp.com">App Hosted on Heroku</a>
  </p>
 
 ## Description
