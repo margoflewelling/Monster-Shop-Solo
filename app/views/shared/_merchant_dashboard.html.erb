@@ -11,10 +11,10 @@
   <ul>
     <li><%=link_to "Order ##{order.id}", "/merchant/orders/#{order.id}"%></li>
     <li>Created at: <%=order.created_at%></li>
-    <li>Total Number of Items in the Order: <%=order.item_orders.sum(:quantity)%></li>
-    <li>Total Value of Items in the Order: $<%=order.grandtotal%></li>
+    <li>Total Number of Items in the Order: <%=order.items.where("items.merchant_id =?", @merchant.id).sum(:quantity)%></li>
+    <li>Total Value of Items in the Order: $<%=order.items.where("items.merchant_id =?", @merchant.id).sum('items.price * quantity')%></li>
   </ul>
 <%end%>
 </div>
 
-<%= link_to "View My Items", "/merchant/items"%>
+<%= link_to "View My Items", "/merchant/#{@merchant.id}/items"%>

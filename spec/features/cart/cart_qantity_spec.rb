@@ -30,7 +30,7 @@ RSpec.describe 'As a visitor' do
           expect(page).to have_content(2)
         end
 
-        expect(page).to have_content("Do not have enough of this item in stock, please choose another.")
+        expect(page).to have_content("There's not enough of this item in stock, please choose another.")
       end
     end
 

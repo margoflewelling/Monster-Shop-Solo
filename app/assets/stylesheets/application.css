@@ -140,6 +140,23 @@ form {
   background-color: green;
   color: white;
 }
+.message-flash {
+  padding: 10px;
+  background-color: #4b98e4;
+  color: white;
+}
+
+.notice-flash {
+  padding: 10px;
+  background-color: #4b98e4;
+  color: white;
+}
+
+.inventory_notice-flash {
+  padding: 10px;
+  background-color: #5134c3;
+  color: white;
+}
 
 table {
   font-family: arial, sans-serif;

@@ -43,7 +43,7 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
     end
 
     it 'can add a new item' do
-      visit "/merchant/items"
+      visit "/merchant/#{@meg.id}/items"
       click_link "Add New Item"
       expect(current_path).to eq("/merchant/items/new")
 
@@ -54,7 +54,7 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
       fill_in :inventory, with: 25
       click_button "Create Item"
 
-      expect(current_path).to eq("/merchant/items")
+      expect(current_path).to eq("/merchant/#{@meg.id}/items")
       expect(page).to have_content("Your item 'Helmet' has been saved")
       expect(page).to have_css("img[src*='https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/HNNN2?wid=1144&hei=1144&fmt=jpeg&qlt=95&op_usm=0.5%2C0.5&.v=1570147746237']")
       expect(page).to have_content("Helmet")
@@ -66,7 +66,7 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
     end
 
     it 'can add a new item without image' do
-      visit "/merchant/items"
+      visit "/merchant/#{@meg.id}/items"
       click_link "Add New Item"
       expect(current_path).to eq("/merchant/items/new")
 
@@ -78,7 +78,7 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
 
       new_item = Item.last
 
-      expect(current_path).to eq("/merchant/items")
+      expect(current_path).to eq("/merchant/#{@meg.id}/items")
       expect(page).to have_content("Your item 'Helmet' has been saved")
       expect(page).to have_content(new_item.name)
       expect(page).to have_css("img[src*='https://www.intemposoftware.com/uploads/blog/Blog_inventory_control.jpg']")
@@ -90,7 +90,7 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
     end
 
     it 'cannot add incorrect or missing data and will repopulate form with previous data' do
-      visit "/merchant/items"
+      visit "/merchant/#{@meg.id}/items"
       click_link "Add New Item"
       expect(current_path).to eq("/merchant/items/new")
 
@@ -98,8 +98,8 @@ RSpec.describe "Merchant Items Index Page", type: :feature do
       fill_in :price, with: -20
       click_button "Create Item"
 
-      expect(page).to have_content("Name can't be blank, Description can't be blank, Inventory can't be blank, Inventory is not a number, and Price must be greater than 0")
-      expect(page).to have_selector("input[value='-$20.00']")
+      expect(page).to have_content("Name can't be blank, Description can't be blank, Inventory can't be blank, Inventory is not a number, and Price must be greater than or equal to 0")
+      expect(page).to have_selector("input[value='-20']")
       expect(page).to have_button("Create Item")
     end
   end

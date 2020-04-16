@@ -51,7 +51,7 @@ RSpec.describe("Orders index and show pages") do
       within("##{@order_1.id}") do
         click_link("#{@order_1.id}")
       end
-      expect(current_path).to eq("/orders/#{@order_1.id}")
+      expect(current_path).to eq("/profile/orders/#{@order_1.id}")
 
       within("#orderid") do
         expect(page).to have_content(@order_1.id)
@@ -67,6 +67,7 @@ RSpec.describe("Orders index and show pages") do
 
       within("#item-#{@tire.id}") do
         expect(page).to have_content(@tire.name)
+        expect(page).to have_content(@tire.description)
         expect(page).to have_css("img[src='https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588']")
         expect(page).to have_content(@item_order_1.quantity)
         expect(page).to have_content(@tire.price)
@@ -82,7 +83,7 @@ RSpec.describe("Orders index and show pages") do
     end
 
     it "can cancel an order" do
-      visit "/orders/#{@order_1.id}"
+      visit "/profile/orders/#{@order_1.id}"
       expect(page).to have_link("Cancel Order")
       click_link("Cancel Order")
       @order_1.reload
@@ -93,7 +94,7 @@ RSpec.describe("Orders index and show pages") do
       expect(page).to have_content("Order ##{@order_1.id} has been cancelled")
       expect(@order_1.status).to eq("Cancelled")
 
-      visit "/orders/#{@order_1.id}"
+      visit "/profile/orders/#{@order_1.id}"
       expect(page).to have_content("Unfulfilled")
     end
 

@@ -53,14 +53,14 @@ RSpec.describe 'As a merchant employee' do
 
     within("##{@order_1.id}") do
       expect(page).to have_content(@order_1.created_at)
-      expect(page).to have_content(@order_1.items.sum(:quantity))
-      expect(page).to have_content(@order_1.grandtotal)
+      expect(page).to have_content(5)
+      expect(page).to have_content(230)
     end
 
     within("##{@order_2.id}") do
       expect(page).to have_content(@order_2.created_at)
-      expect(page).to have_content(@order_2.items.sum(:quantity))
-      expect(page).to have_content(@order_2.grandtotal)
+      expect(page).to have_content(3)
+      expect(page).to have_content(30)
     end
 
     expect(page).to_not have_content("Total Value of Items in the Order: $#{@order_3.grandtotal}")
@@ -69,7 +69,7 @@ RSpec.describe 'As a merchant employee' do
   it 'I see order information' do
     visit '/merchant'
     click_link 'View My Items'
-    expect(current_path).to eq("/merchant/items")
+    expect(current_path).to eq("/merchant/#{@meg.id}/items")
   end
 
 end

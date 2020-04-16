@@ -1,6 +1,4 @@
 <h1>Logged in as <%=@user.name%></h1>
-
-
 <% if @user.has_orders? %>
 <%= link_to "My Orders", "/user/profile/orders" %>
 <% end %>
@@ -8,32 +6,7 @@
 <h3>Profile Information</h3>
 
 <section>
-  <table>
-    <tr>
-      <td>Name</td>
-      <td><%= @user.name %></td>
-    </tr>
-    <tr>
-      <td>Address</td>
-      <td><%= @user.street_address %></td>
-    </tr>
-    <tr>
-      <td>City</td>
-      <td><%= @user.city %></td>
-    </tr>
-    <tr>
-      <td>State</td>
-      <td><%= @user.state %></td>
-    </tr>
-    <tr>
-      <td>Zip Code</td>
-      <td><%= @user.zip_code %></td>
-    </tr>
-    <tr>
-      <td>Email Address</td>
-      <td><%= @user.email_address %></td>
-    </tr>
-  </table>
+  <%= render "shared/user_profile" %>
   <%= link_to "Edit Profile Info", "/user/profile/edit" %>
   <%= link_to "Edit Password", edit_password_path %>
 </section>

@@ -2,16 +2,13 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'welcome#index'
 
-  resources :merchants
+  resources :merchants, except: [:edit, :update, :delete]
 
   get "/items", to: "items#index"
   get "/items/:id", to: "items#show"
-  get "/items/:id/edit", to: "items#edit"
-  patch "/items/:id", to: "items#update"
   get "/merchants/:merchant_id/items", to: "items#index"
   get "/merchants/:merchant_id/items/new", to: "items#new"
   post "/merchants/:merchant_id/items", to: "items#create"
-  delete "/items/:id", to: "items#destroy"
 
   get "/items/:item_id/reviews/new", to: "reviews#new"
   post "/items/:item_id/reviews", to: "reviews#create"
@@ -28,8 +25,9 @@ Rails.application.routes.draw do
   patch "/cart/:item_id/decrement", to: "cart#decrement"
 
   get "/orders/new", to: "orders#new"
+  get "/profile/orders/:id", to: "orders#show"
+  patch "/orders/:id", to: "orders#update"
   post "/orders", to: "orders#create"
-  get "/orders/:id", to: "orders#show"
   delete "/orders/:id", to: "orders#destroy"
 
   get '/register', to: "users#new"
@@ -46,9 +44,13 @@ Rails.application.routes.draw do
   resource :password, only: [:edit, :update]
 
   namespace :merchant do
+    get '/merchants/:id/edit', to: 'merchants#edit'
+    patch '/merchants/:id', to: 'merchants#update'
+    delete '/merchants/:id', to: 'merchants#destroy'
+
     get '/', to: "dashboard#index"
     get '/orders/:id', to: "dashboard#show"
-    get '/items', to: "items#index"
+    get '/:merchant_id/items', to: "items#index"
     get '/items/new', to: "items#new"
     get '/items/:item_id/edit', to: "items#edit"
     post '/items', to: "items#create"
@@ -66,6 +68,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/', to: 'dashboard#index'
     get '/users', to: 'users#user_names'
+    get '/users/:user_id', to: 'users#show'
     get '/merchants/:merchant_id', to: 'merchant#show'
     get '/merchants', to: 'merchant#index'
     patch '/merchant/:merchant_id/disable', to: 'merchant#disable'

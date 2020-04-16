@@ -4,6 +4,25 @@ RSpec.describe "As a Visitor" do
   describe "After visiting a merchants show page and clicking on updating that merchant" do
     before :each do
       @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 11234)
+
+      @regina = User.create({name: "Regina",
+                             street_address: "6667 Evil Ln",
+                             city: "Storybrooke",
+                             state: "ME",
+                             zip_code: "00435",
+                             email_address: "evilqueen@example.com",
+                             password: "henry2004",
+                             password_confirmation: "henry2004",
+                             role: 1,
+                             merchant_id: @bike_shop.id
+                            })
+      visit '/'
+
+      click_link 'Log in'
+
+      fill_in :email_address, with: 'evilqueen@example.com'
+      fill_in :password, with: 'henry2004'
+      click_button 'Log in'
     end
     it 'I can see prepopulated info on that user in the edit form' do
       visit "/merchants/#{@bike_shop.id}"

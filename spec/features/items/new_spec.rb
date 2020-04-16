@@ -18,6 +18,14 @@ RSpec.describe "Create Merchant Items" do
     end
 
     it 'I see a link to add a new item for that merchant' do
+      visit '/'
+
+      click_link 'Log in'
+
+      fill_in :email_address, with: 'evilqueen@example.com'
+      fill_in :password, with: 'henry2004'
+      click_button 'Log in'
+
       visit "/merchants/#{@brian.id}/items"
 
       expect(page).to have_link "Add New Item"
@@ -43,7 +51,7 @@ RSpec.describe "Create Merchant Items" do
       click_on "Add New Item"
 
       expect(page).to have_link(@brian.name)
-      expect(current_path).to eq("/merchants/#{@brian.id}/items/new")
+      expect(current_path).to eq("/merchant/items/new")
       fill_in :name, with: name
       fill_in :price, with: price
       fill_in :description, with: description
@@ -54,7 +62,7 @@ RSpec.describe "Create Merchant Items" do
 
       new_item = Item.last
 
-      expect(current_path).to eq("/merchants/#{@brian.id}/items")
+      expect(current_path).to eq("/merchant/#{@brian.id}/items")
       expect(new_item.name).to eq(name)
       expect(new_item.price).to eq(price)
       expect(new_item.description).to eq(description)
@@ -66,11 +74,19 @@ RSpec.describe "Create Merchant Items" do
       expect(page).to have_content("Price: $#{new_item.price}")
       expect(page).to have_css("img[src*='#{new_item.image}']")
       expect(page).to have_content("Active")
-      expect(page).to_not have_content(new_item.description)
+      expect(page).to have_content(new_item.description)
       expect(page).to have_content("Inventory: #{new_item.inventory}")
     end
 
     it 'I get an alert if I dont fully fill out the form' do
+      visit '/'
+
+      click_link 'Log in'
+
+      fill_in :email_address, with: 'evilqueen@example.com'
+      fill_in :password, with: 'henry2004'
+      click_button 'Log in'
+
       visit "/merchants/#{@brian.id}/items"
 
       name = ""
