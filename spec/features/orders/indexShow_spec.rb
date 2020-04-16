@@ -13,7 +13,6 @@ RSpec.describe("Orders index and show pages") do
       within ("#login-form") do
         click_on "Log in"
       end
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
        @order_1 = Order.create({name: "Bob", address: "22 dog st", city: "Fort Collins",
                            state: "CO", zip: "80375", status: "Pending", user_id: @user.id})
@@ -83,10 +82,33 @@ RSpec.describe("Orders index and show pages") do
     end
 
     it "can cancel an order" do
+      @meg_employee = User.create({name: "Regina",
+                          street_address: "6667 Evil Ln",
+                          city: "Storybrooke",
+                          state: "ME",
+                          zip_code: "00435",
+                          email_address: "evilqueen@example.com",
+                          password: "henry2004",
+                          password_confirmation: "henry2004",
+                          role: 1,
+                          merchant_id: @meg.id
+                         })
+      click_on "Log out"
+      visit '/'
+      click_on "Log in"
+      fill_in :email_address, with: "evilqueen@example.com"
+      fill_in :password, with: "henry2004"
+      click_button "Log in"
+      click_on "Order ##{@order_1.id}"
+      click_on "Fulfill"
+      @tire.reload
+
       visit "/profile/orders/#{@order_1.id}"
+      expect(@tire.inventory).to eq(9)
       expect(page).to have_link("Cancel Order")
       click_link("Cancel Order")
       @order_1.reload
+      @tire.reload
       expect(@item_order_1.fulfilled?).to eq(false)
       expect(@tire.inventory).to eq(12)
 
