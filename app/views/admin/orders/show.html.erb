@@ -1,5 +1,8 @@
 <h1> Order #<%= @order.id %> Information </h1>
 <p> Created on: <%= @order.created_at %> | Last Updated: <%=@order.updated_at %> | Order Status: <%= @order.status %></p>
+<% if @order.status == "Pending" %>
+  <%= link_to "Cancel Order", "/orders/#{@order.id}", method: :delete%>
+<% end %>
 <h3 align = "center">Order Items</h3>
 <center>
   <table>

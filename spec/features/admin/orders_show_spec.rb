@@ -71,19 +71,18 @@ RSpec.describe 'As an admin employee' do
     expect(page).to have_content("Grand Total: $250")
   end
 
-end
+  it "can cancel an order" do
+    visit "/admin/users/#{@user.id}/orders/#{@order_1.id}"
+    expect(page).to have_link("Cancel Order")
+    click_on("Cancel Order")
+    @tire.reload
+    expect(@tire.inventory).to eq(12)
+    expect(@pull_toy.inventory).to eq(32)
+    expect(@dog_bone.inventory).to eq(21)
+    expect(current_path).to eq("/admin")
+    within "#order-#{@order_1.id}" do
+      expect(page).to have_content("Cancelled")
+    end
+  end
 
-# User Story 56, EXTENSION: Admin views a User's Order Show Page
-#
-# As an admin user
-# When I visit a user's profile
-# And I click on a link for order's show page
-# My URL route is now something like "/admin/users/5/orders/15"
-# I see all information about the order, including the following information:
-# - the ID of the order
-# - the date the order was made
-# - the date the order was last updated
-# - the current status of the order
-# - each item the user ordered, including name, description, thumbnail, quantity, price and subtotal
-# - the total quantity of items in the whole order
-# - the grand total of all items for that order
+end
