@@ -18,7 +18,11 @@ class User::UsersController < User::BaseController
     @user.update(user_params)
     if @user.save
       flash[:message] = "Your information is updated"
-      redirect_to :user_profile
+      if current_admin?
+        redirect_to "/admin/users/#{@user.id}"
+      else
+        redirect_to :user_profile
+      end
     else
       flash[:error] = @user.errors.full_messages.to_sentence
       redirect_to :user_profile_edit
