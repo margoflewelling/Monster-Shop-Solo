@@ -30,7 +30,6 @@ RSpec.describe "Merchants can add bulk discount rate", type: :feature do
 
     it "merchant can go to a bulk discounts page from their dashboard" do
       expect(page).to have_link("Bulk Discounts")
-      save_and_open_page
       click_on("Bulk Discounts")
       expect(current_path).to eq("/merchant/discounts")
     end
