@@ -64,6 +64,8 @@ Rails.application.routes.draw do
     get '/discounts', to: "discounts#index"
     post '/discounts', to: "discounts#create"
     delete '/discounts/:id', to: "discounts#destroy"
+    get '/discounts/:id', to: "discounts#edit"
+    put '/discounts/:id', to: "discounts#update"
   end
 
   get '/login', to: 'sessions#new'
