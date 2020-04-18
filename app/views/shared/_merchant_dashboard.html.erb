@@ -19,4 +19,5 @@
 
 <% if !current_admin? %>
   <%= link_to "View My Items", "/merchant/#{@merchant.id}/items"%>
+  <%= link_to "Bulk Discounts", "/merchant/discounts" %>
 <% end %>
