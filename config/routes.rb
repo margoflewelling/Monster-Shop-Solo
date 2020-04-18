@@ -62,6 +62,8 @@ Rails.application.routes.draw do
     delete '/items/:item_id', to: "items#destroy"
 
     get '/discounts', to: "discounts#index"
+    post '/discounts', to: "discounts#create"
+    delete '/discounts/:id', to: "discounts#destroy"
   end
 
   get '/login', to: 'sessions#new'
