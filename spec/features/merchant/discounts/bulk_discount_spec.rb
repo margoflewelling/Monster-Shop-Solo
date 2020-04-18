@@ -35,14 +35,36 @@ RSpec.describe "Merchants can add bulk discount rate", type: :feature do
     end
 
     it "can add bulk discounts from index page" do
+      visit "/merchant/discounts"
+      expect(page).to have_content("My Discounts")
+      fill_in :percentage, with: 20
+      fill_in :min_quantity, with: 5
+      click_on "Create Discount"
+      page.refresh
+      discount_1 = Discount.last
+      within ".active_discounts" do
+        expect(page).to have_content("#{discount_1.percentage} percent off of #{discount_1.min_quantity} items or more")
+      end
     end
 
+    it "can delete a discount" do
+      discount_1 = @meg.discounts.create(percentage: 20, min_quantity: 5)
+      discount_2 = @meg.discounts.create(percentage: 30, min_quantity: 10)
+      visit "/merchant/discounts"
+      within ".discount-#{discount_1.id}" do
+        click_on("Delete Discount")
+      end
+      page.refresh
+      within ".active_discounts" do
+        expect(page).to_not have_content("#{discount_1.percentage} percent off of #{discount_1.min_quantity} items or more")
+        expect(page).to have_content("#{discount_2.percentage} percent off of #{discount_2.min_quantity} items or more")
+      end
+      expect(Discount.count).to eq(1)
+    end
   end
 
     # Merchants need full CRUD functionality on bulk discounts, and will be accessed a link on the merchant's dashboard.
-    # You will implement a percentage based discount:
-    # 5% discount on 20 or more items
-    # A merchant can have multiple bulk discounts in the system.
+
     # When a user adds enough value or quantity of a single item to their cart, the bulk discount will automatically show up on the cart page.
     # A bulk discount from one merchant will only affect items from that merchant in the cart.
     # A bulk discount will only apply to items which exceed the minimum quantity specified in the bulk discount. (eg, a 5% off 5 items or more does not activate if a user is buying 1 quantity of 5 different items; if they raise the quantity of one item to 5, then the bulk discount is only applied to that one item, not all of the others as well)

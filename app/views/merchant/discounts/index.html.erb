@@ -1,6 +1,26 @@
-<h1>Bulk Discounts</h1>
-
-<h3>My active discounts</h3>
-<% @merchant.discounts each do |discount| %>
-<% discount %>
+<h1>My Discounts</h1>
+<section class = "active_discounts">
+<%if @merchant.merchant.discounts != [] %>
+<ul>
+  <%@merchant.merchant.discounts.each do |discount| %>
+  <div class = <%="discount-#{discount.id}"%>>
+  <li><%=discount.percentage%> percent off of <%=discount.min_quantity%> items or more</li></
+  <%= link_to "Delete Discount", "/merchant/discounts/#{discount.id}", method: :delete %>
+  </div>
 <%end%>
+</ul>
+<% else %>
+<p> No active discounts <p>
+<% end %>
+</section>
+
+<h2>Add New Discount</h2>
+<%= form_tag "/merchant/discounts", method: :create do %>
+  <%= label_tag :Percent_Off %>
+  <%= text_field_tag :percentage %>
+
+  <%= label_tag :Minimum_Quantity_of_Items %>
+  <%= text_field_tag :min_quantity %>
+
+  <%= submit_tag 'Create Discount' %>
+<% end %>
