@@ -60,6 +60,8 @@ Rails.application.routes.draw do
     patch '/items/:item_id', to: "items#update"
 
     delete '/items/:item_id', to: "items#destroy"
+
+    get '/discounts', to: "discounts#index"
   end
 
   get '/login', to: 'sessions#new'
