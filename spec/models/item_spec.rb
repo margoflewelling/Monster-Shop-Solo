@@ -57,15 +57,14 @@ describe Item, type: :model do
       expect(@chain.no_orders?).to eq(false)
     end
 
-  it "item_discounts" do
+  it "find_discounts" do
     @dog_shop = Merchant.create(name: "Dog Shop", address: '123 Dog Rd.', city: 'Denver', state: 'CO', zip: 80203)
     @bone = @dog_shop.items.create(name: "bone", description: "Your pup will love!", price: 5, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
 
     discount_1 = @bike_shop.discounts.create(percentage: 20, min_quantity: 5)
-    expect(@chain.item_discounts).to eq([discount_1])
-    expect(@chain.item_discounts.length).to eq(1)
-    expect(@bone.item_discounts).to eq([])
-
+    expect(@chain.find_discounts).to eq([discount_1])
+    expect(@chain.find_discounts.length).to eq(1)
+    expect(@bone.find_discounts).to eq([])
   end
 end
 
