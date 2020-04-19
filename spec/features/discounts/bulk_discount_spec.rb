@@ -61,6 +61,25 @@ RSpec.describe "Merchants can add bulk discount rate", type: :feature do
       end
       expect(Discount.count).to eq(1)
     end
+
+    it "can edit an item" do
+      discount_1 = @meg.discounts.create(percentage: 20, min_quantity: 5)
+      discount_2 = @meg.discounts.create(percentage: 30, min_quantity: 10)
+      visit "/merchant/discounts"
+      within ".discount-#{discount_1.id}" do
+        click_on("Edit Discount")
+      end
+      page.refresh
+      within ".discount-#{discount_1.id}" do
+        fill_in 'percentage', with: 25
+        click_on("Update")
+      end
+      page.refresh
+      within ".active_discounts" do
+        expect(page).to have_content("25 percent off of #{discount_1.min_quantity} items or more")
+      end
+    end
+
   end
 
     # Merchants need full CRUD functionality on bulk discounts, and will be accessed a link on the merchant's dashboard.

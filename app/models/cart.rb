@@ -23,13 +23,36 @@ class Cart
   end
 
   def subtotal(item)
-    item.price * @contents[item.id.to_s]
+    item.price * @contents[item.id.to_s] * (1-best_discount(item))
   end
 
   def total
     @contents.sum do |item_id,quantity|
-      Item.find(item_id).price * quantity
+      subtotal(Item.find(item_id))
     end
   end
+
+  def best_discount(item)
+    quantity = @contents[item.id.to_s]
+    applicable_discounts = item.find_discounts.find_all {|discount| quantity >= discount.min_quantity}
+    if applicable_discounts != []
+      best_discount = applicable_discounts.max_by{|discount| discount[:percentage]}
+      percent_off = best_discount.percentage.to_f/100
+    else
+      percent_off = 0
+    end
+    percent_off
+  end
+
+    # discounted_items = Hash.new
+    # @contents.each do |item_id, quantity|
+    #   item = Item.find(item_id)
+    #   if item.item_discounts != []
+    #     applicable_discounts = item.item_discounts.find_all {|discount| quantity > discount.min_quantity}
+    #     best_discount = applicable_discounts.max_by(:percentage)
+    #     @discounted_items[item] = item.price * (1-best_discount.percentage)
+    #   end
+    # end
+
 
 end

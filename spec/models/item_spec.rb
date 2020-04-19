@@ -19,7 +19,7 @@ describe Item, type: :model do
   describe "instance methods" do
     before(:each) do
       @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
-      @chain = @bike_shop.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
+      @chain = @bike_shop.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 10)
 
       @review_1 = @chain.reviews.create(title: "Great place!", content: "They have great bike stuff and I'd recommend them to anyone.", rating: 5)
       @review_2 = @chain.reviews.create(title: "Cool shop!", content: "They have cool bike stuff and I'd recommend them to anyone.", rating: 4)
@@ -56,7 +56,17 @@ describe Item, type: :model do
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
+
+  it "find_discounts" do
+    @dog_shop = Merchant.create(name: "Dog Shop", address: '123 Dog Rd.', city: 'Denver', state: 'CO', zip: 80203)
+    @bone = @dog_shop.items.create(name: "bone", description: "Your pup will love!", price: 5, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
+
+    discount_1 = @bike_shop.discounts.create(percentage: 20, min_quantity: 5)
+    expect(@chain.find_discounts).to eq([discount_1])
+    expect(@chain.find_discounts.length).to eq(1)
+    expect(@bone.find_discounts).to eq([])
   end
+end
 
   describe "class methods" do
     before(:each) do

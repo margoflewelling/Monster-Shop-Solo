@@ -4,8 +4,20 @@
 <ul>
   <%@merchant.merchant.discounts.each do |discount| %>
   <div class = <%="discount-#{discount.id}"%>>
-  <li><%=discount.percentage%> percent off of <%=discount.min_quantity%> items or more</li></
-  <%= link_to "Delete Discount", "/merchant/discounts/#{discount.id}", method: :delete %>
+    <% if discount == @discount_to_edit %>
+    <section id = "form">
+        <%= form_tag "/merchant/discounts/#{discount.id}", method: :put do %>
+        <%= text_field_tag :percentage, discount.percentage%>
+        <%= label_tag :percent_off_of %>
+        <%= text_field_tag :min_quantity, discount.min_quantity %>
+        <p>items or more</p><%= submit_tag "Update" %>
+        <% end %>
+        </section>
+      <%else %>
+        <li><%=discount.percentage%> percent off of <%=discount.min_quantity%> items or more</li>
+        <%= link_to "Edit Discount", "/merchant/discounts/#{discount.id}", method: :get %>
+        <%= link_to "Delete Discount", "/merchant/discounts/#{discount.id}", method: :delete %>
+      <% end %>
   </div>
 <%end%>
 </ul>
