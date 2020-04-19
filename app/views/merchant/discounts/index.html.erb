@@ -14,8 +14,8 @@
         <% end %>
         </section>
       <%else %>
-        <li><%=discount.percentage%> percent off of <%=discount.min_quantity%> items or more</li></
-        <%= button_to "Edit Discount", "/merchant/discounts/#{discount.id}", method: :get %>
+        <li><%=discount.percentage%> percent off of <%=discount.min_quantity%> items or more</li>
+        <%= link_to "Edit Discount", "/merchant/discounts/#{discount.id}", method: :get %>
         <%= link_to "Delete Discount", "/merchant/discounts/#{discount.id}", method: :delete %>
       <% end %>
   </div>
