@@ -67,7 +67,7 @@ RSpec.describe "Merchants can add bulk discount rate", type: :feature do
       discount_2 = @meg.discounts.create(percentage: 30, min_quantity: 10)
       visit "/merchant/discounts"
       within ".discount-#{discount_1.id}" do
-        click_button("Edit Discount")
+        click_on("Edit Discount")
       end
       page.refresh
       within ".discount-#{discount_1.id}" do
