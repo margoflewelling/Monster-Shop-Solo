@@ -44,15 +44,4 @@ class Cart
     percent_off
   end
 
-    # discounted_items = Hash.new
-    # @contents.each do |item_id, quantity|
-    #   item = Item.find(item_id)
-    #   if item.item_discounts != []
-    #     applicable_discounts = item.item_discounts.find_all {|discount| quantity > discount.min_quantity}
-    #     best_discount = applicable_discounts.max_by(:percentage)
-    #     @discounted_items[item] = item.price * (1-best_discount.percentage)
-    #   end
-    # end
-
-
 end
