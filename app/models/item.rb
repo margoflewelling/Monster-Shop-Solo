@@ -34,8 +34,9 @@ class Item <ApplicationRecord
     least_popular_item_orders.map {|item| Item.find(item.id).name }
   end
 
-  def item_discounts
+  def find_discounts
      Discount.joins("INNER JOIN items ON items.merchant_id = discounts.merchant_id").where(merchant_id: "#{merchant_id}")
   end
+
 
 end
