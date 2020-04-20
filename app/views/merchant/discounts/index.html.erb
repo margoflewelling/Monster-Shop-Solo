@@ -7,16 +7,16 @@
     <% if discount == @discount_to_edit %>
     <section id = "form">
         <%= form_tag "/merchant/discounts/#{discount.id}", method: :put do %>
-        <%= text_field_tag :percentage, discount.percentage%>
+        <%= text_field_tag :percentage, discount.percentage, size: 4 %>
         <%= label_tag :percent_off_of %>
-        <%= text_field_tag :min_quantity, discount.min_quantity %>
+        <%= text_field_tag :min_quantity, discount.min_quantity, size: 4 %>
         <p>items or more</p><%= submit_tag "Update" %>
         <% end %>
         </section>
       <%else %>
-        <li><%=discount.percentage%> percent off of <%=discount.min_quantity%> items or more</li>
-        <%= link_to "Edit Discount", "/merchant/discounts/#{discount.id}", method: :get %>
-        <%= link_to "Delete Discount", "/merchant/discounts/#{discount.id}", method: :delete %>
+        <li><strong><%=discount.percentage%></strong> percent off of <strong><%=discount.min_quantity%></strong> items or more</li>
+        <%= link_to "Edit Discount", "/merchant/discounts/#{discount.id}", method: :get %> |
+        <%= link_to "Delete Discount", "/merchant/discounts/#{discount.id}", method: :delete %> <br><br>
       <% end %>
   </div>
 <%end%>
