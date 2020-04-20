@@ -9,6 +9,7 @@
     <th>Price</th>
     <th>Quantity</th>
     <th>Subtotal</th>
+    <th>Available Discounts</th>
   </tr>
   <% @items.each do |item,quantity| %>
     <tr id= "cart-item-<%=item.id%>">
@@ -40,6 +41,14 @@
       <td>
         <p><%=number_to_currency(cart.subtotal(item))%></p>
     </td>
+    <td>
+      <% if item.find_discounts != [] %>
+          <% item.find_discounts.each do |discount| %>
+          <p><strong><%=discount.percentage%>% off </strong> if you buy <strong><%=discount.min_quantity%></strong> items or more </p>
+          <% end %>
+      <% else %>
+        <p> No discounts available for this item </p>
+        <% end %>
     </tr>
   <% end %>
 </table>

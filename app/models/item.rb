@@ -35,7 +35,7 @@ class Item <ApplicationRecord
   end
 
   def find_discounts
-     Discount.joins("INNER JOIN items ON items.merchant_id = discounts.merchant_id").where(merchant_id: "#{merchant_id}")
+     Discount.joins("INNER JOIN items ON items.merchant_id = discounts.merchant_id").where(merchant_id: "#{merchant_id}").distinct
   end
 
 
