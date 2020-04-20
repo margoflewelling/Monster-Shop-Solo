@@ -6,7 +6,4 @@ class Discount <ApplicationRecord
 
   belongs_to :merchant
 
-  def new
-    @discount = Disount.new
-  end
 end
