@@ -18,10 +18,11 @@ dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', c
 
 #bike_shop items
 tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+tube = bike_shop.items.create(name: "Tube", description: "Always carry a spare!", price: 5, image: "https://www.rei.com/media/ee25324f-ef69-4814-b94c-7967ad5eeeee?size=784x588", inventory: 40)
 
 #dog_shop items
 pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "https://images-na.ssl-images-amazon.com/images/I/71L30-Xfs9L._AC_SX425_.jpg", inventory: 32)
-dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", inventory: 21)
 
 #users
 bob = User.create({name: "Bob",
@@ -70,11 +71,3 @@ bert = User.create({name: "Bert",
                      })
 
 #orders
-order_1 = Order.create(name: 'Regina', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: "Pending", user_id: regina.id)
-order_2 = Order.create(name: 'Bob', address: '123 Zanti St', city: 'Denver', state: 'CO', zip: 80204, status: "Pending", user_id: bob.id)
-order_3 = Order.create(name: 'Bob', address: '123 Zanti St', city: 'Denver', state: 'CO', zip: 80204, status: "Cancelled", user_id: bob.id)
-
-order_1.item_orders.create(item: tire, price: tire.price, quantity: 2)
-order_1.item_orders.create(item: pull_toy, price: pull_toy.price, quantity: 3)
-order_2.item_orders.create(item: pull_toy, price: pull_toy.price, quantity: 3)
-order_3.item_orders.create(item: dog_bone, price: dog_bone.price, quantity: 1)
