@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "applying discount to the cart", type: :feature do
+RSpec.describe "applying discounts", type: :feature do
     before(:each) do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @bill = Merchant.create(name: "Bill's Dog Shop", address: '123 Dog Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -89,4 +89,30 @@ RSpec.describe "applying discount to the cart", type: :feature do
       page.refresh
       expect(page).to have_content("Total: $300")
     end
+
+    it "can apply the order to the cart" do
+      click_on "All Items"
+      click_on "Gatorskins"
+      click_on "Add To Cart"
+      click_on "Chain"
+      click_on "Add To Cart"
+      click_on "Cart"
+      within "#cart-item-#{@tire.id}" do
+        click_on "+"
+        click_on "+"
+        click_on "+"
+        click_on "+"
+      end
+      click_on "Checkout"
+      fill_in :name, with: "Margo"
+      fill_in :address, with: "123 example"
+      fill_in :city, with: "Denver"
+      fill_in :state, with: "CO"
+      fill_in :zip, with: "80210"
+      click_on "Create Order"
+      order = Order.last
+      click_on ("Order ##{order.id}")
+      expect(order.grandtotal).to eq(300)
+    end
+
   end
