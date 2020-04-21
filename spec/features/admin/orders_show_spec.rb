@@ -23,9 +23,9 @@ RSpec.describe 'As an admin employee' do
 
     @order_1 = Order.create!(name: 'Regina', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: "Pending", user_id: @user.id)
 
-    @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
-    @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
-    @order_1.item_orders.create!(item: @dog_bone, price: @dog_bone.price, quantity: 1)
+    @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, subtotal: 200)
+    @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3, subtotal: 30)
+    @order_1.item_orders.create!(item: @dog_bone, price: @dog_bone.price, quantity: 1, subtotal: 20)
 
     visit '/'
 
