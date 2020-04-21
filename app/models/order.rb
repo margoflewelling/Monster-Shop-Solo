@@ -6,6 +6,7 @@ class Order <ApplicationRecord
   belongs_to :user
 
   def grandtotal
-    item_orders.sum('price * quantity')
+    grandtotal = item_orders.sum(:subtotal)
+    grandtotal
   end
 end
