@@ -1,6 +1,6 @@
 <h1 align= "center">Edit Password</h1>
 <center>
-  <%= form_for @user, :url => :password, method: :patch do |f| %>
+  <%= form_for @user, :url => "/password/update", method: :patch do |f| %>
 
     <%= f.label :password %>
     <%= f.password_field :password, id:"password" %>

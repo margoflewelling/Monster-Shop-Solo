@@ -11,7 +11,7 @@ class PasswordsController <ApplicationController
       redirect_to :user_profile
     else
       flash[:error] = @user.errors.full_messages.to_sentence
-      redirect_to :edit_password
+      redirect_to "/password/edit"
     end
   end
 

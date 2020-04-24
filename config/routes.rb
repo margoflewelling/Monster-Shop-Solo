@@ -2,36 +2,43 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'welcome#index'
 
-  resources :merchants, except: [:edit, :update, :delete]
+## new routes
+  get "/merchants/new", to: "merchants#new"
+  get "/merchants/:id", to: "merchants#show"
+  get "/merchants", to: "merchants#index"
+  post "/merchants", to: "merchants#create"
 
-  get "/items", to: "items#index"
-  get "/items/:id", to: "items#show"
-  get "/merchants/:merchant_id/items", to: "items#index"
-  get "/merchants/:merchant_id/items/new", to: "items#new"
-  post "/merchants/:merchant_id/items", to: "items#create"
+  resources :items, only: [:index, :show]
+  resources :reviews, only: [:edit, :update, :destroy]
 
-  get "/items/:item_id/reviews/new", to: "reviews#new"
-  post "/items/:item_id/reviews", to: "reviews#create"
+  get "/password/edit", to: "passwords#edit"
+  patch "/password/update", to: "passwords#update"
 
-  get "/reviews/:id/edit", to: "reviews#edit"
-  patch "/reviews/:id", to: "reviews#update"
-  delete "/reviews/:id", to: "reviews#destroy"
+  resources :orders, only: [:new, :update, :create, :destroy]
 
-  post "/cart/:item_id", to: "cart#add_item"
-  get "/cart", to: "cart#show"
-  delete "/cart", to: "cart#empty"
-  delete "/cart/:item_id", to: "cart#remove_item"
-  patch "/cart/:item_id/increment", to: "cart#increment"
-  patch "/cart/:item_id/decrement", to: "cart#decrement"
+  namespace :merchant do
+    resources :merchants, only: [:update, :destroy, :edit]
+    resources :items, only: [:edit, :new, :create, :update, :destroy]
+    get '/', to: "dashboard#index"
+    get '/orders/:id', to: "dashboard#show"
+    get '/:merchant_id/items', to: "items#index"
+    patch '/items/:item_id/status', to: "items#status"   
+    patch '/items/:order_id/:item_id/fulfillment', to: "items#fulfill"
+    resources :discounts, only: [:index, :create, :destroy, :update]
+    get '/discounts/:id', to: "discounts#edit"
+  end
 
-  get "/orders/new", to: "orders#new"
-  get "/profile/orders/:id", to: "orders#show"
-  patch "/orders/:id", to: "orders#update"
-  post "/orders", to: "orders#create"
-  delete "/orders/:id", to: "orders#destroy"
-
-  get '/register', to: "users#new"
-  post '/register', to: "users#create"
+  namespace :admin do
+    resources :users, only: [:show]
+    resources :merchants, only: [:show, :index]
+    get '/', to: 'dashboard#index'
+    get '/users', to: 'users#user_names'
+    patch '/users/:user_id/disable', to: 'users#disable'
+    patch '/users/:user_id/enable', to: 'users#enable'
+    patch '/merchants/:merchant_id/disable', to: 'merchants#disable'
+    patch '/merchants/:merchant_id/enable', to: 'merchants#enable'
+    get "users/:user_id/orders/:order_id", to: "orders#show"
+  end
 
   namespace :user do
     get '/profile', to: "users#profile"
@@ -41,46 +48,25 @@ Rails.application.routes.draw do
     get "/profile/orders", to: "users#orders"
   end
 
-  resource :password, only: [:edit, :update]
-
-  namespace :merchant do
-    get '/merchants/:id/edit', to: 'merchants#edit'
-    patch '/merchants/:id', to: 'merchants#update'
-    delete '/merchants/:id', to: 'merchants#destroy'
-
-    get '/', to: "dashboard#index"
-    get '/orders/:id', to: "dashboard#show"
-    get '/:merchant_id/items', to: "items#index"
-    get '/items/new', to: "items#new"
-    get '/items/:item_id/edit', to: "items#edit"
-    post '/items', to: "items#create"
-
-    patch '/items/:item_id/status', to: "items#status"
-    patch '/items/:order_id/:item_id/fulfillment', to: "items#fulfill"
-    patch '/items/:item_id', to: "items#update"
-
-    delete '/items/:item_id', to: "items#destroy"
-
-    get '/discounts', to: "discounts#index"
-    post '/discounts', to: "discounts#create"
-    delete '/discounts/:id', to: "discounts#destroy"
-    get '/discounts/:id', to: "discounts#edit"
-    put '/discounts/:id', to: "discounts#update"
-  end
-
+  get "/profile/orders/:id", to: "orders#show"
   get '/login', to: 'sessions#new'
   get '/logout', to: 'users#logout'
 
-  namespace :admin do
-    get '/', to: 'dashboard#index'
-    get '/users', to: 'users#user_names'
-    get '/users/:user_id', to: 'users#show'
-    patch '/users/:user_id/disable', to: 'users#disable'
-    patch '/users/:user_id/enable', to: 'users#enable'
-    get '/merchants/:merchant_id', to: 'merchant#show'
-    get '/merchants', to: 'merchant#index'
-    patch '/merchant/:merchant_id/disable', to: 'merchant#disable'
-    patch '/merchant/:merchant_id/enable', to: 'merchant#enable'
-    get "users/:user_id/orders/:order_id", to: "orders#show"
-  end
+  get "/merchants/:merchant_id/items", to: "items#index"
+  get "/merchants/:merchant_id/items/new", to: "items#new"
+  post "/merchants/:merchant_id/items", to: "items#create"
+
+  get "/items/:item_id/reviews/new", to: "reviews#new"
+  post "/items/:item_id/reviews", to: "reviews#create"
+
+  post "/cart/:item_id", to: "cart#add_item"
+  get "/cart", to: "cart#show"
+  delete "/cart", to: "cart#empty"
+  delete "/cart/:item_id", to: "cart#remove_item"
+  patch "/cart/:item_id/increment", to: "cart#increment"
+  patch "/cart/:item_id/decrement", to: "cart#decrement"
+
+  get '/register', to: "users#new"
+  post '/register', to: "users#create"
+
 end

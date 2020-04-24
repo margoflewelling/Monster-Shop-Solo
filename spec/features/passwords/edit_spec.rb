@@ -18,7 +18,7 @@ RSpec.describe "As a registered user" do
 
   it "can see all profile data expect password on the profile page with link to edit profile data" do
     click_link 'Edit Password'
-    expect(current_path).to eq(edit_password_path)
+    expect(current_path).to eq("/password/edit")
 
     fill_in :password, with: 'bobbie2020'
     fill_in :password_confirmation, with: 'bobbie2020'
@@ -30,13 +30,13 @@ RSpec.describe "As a registered user" do
 
   it "cannot update a password that doesn't match" do
     click_link 'Edit Password'
-    expect(current_path).to eq(edit_password_path)
+    expect(current_path).to eq("/password/edit")
 
     fill_in :password, with: 'bobbie2020'
     fill_in :password_confirmation, with: 'bobbie20'
     click_button 'Submit'
 
     expect(page).to have_content("Password confirmation doesn't match Password")
-    expect(current_path).to eq(edit_password_path)
+    expect(current_path).to eq("/password/edit")
   end
 end
